@@ -29,15 +29,19 @@ architecture stack_arch of stack is
     signal push_en, pop_en, clear_en : std_logic;
     signal pop_data : std_logic_vector(7 downto 0);
     signal full_tmp, empty_tmp : std_logic;
+	 
+	 signal stack_pointer : integer;
+	 signal ram_enable : std_logic;
 
     begin
         push_en <= push and not full_tmp;
         pop_en <= pop and not empty_tmp;
         clear_en <= clear;
+		  ram_enable <= push or pop or clear;
 
         RAMB4_S8_inst : RAMB4_S8 port map(
             we => push_en,
-            en => push or pop or clear,
+            en => ram_enable,
             rst => clear_en,
             clk => clk,
             addr => addr,
@@ -47,11 +51,12 @@ architecture stack_arch of stack is
         process(clk)
         begin
             if rising_edge(clk) then
+				    if clear_en = '1'
                 if push_en = '1' then
-                    addr <= addr + 1;
+                    addr <= std_logic_vector(to_unsigned(to_integer(unsigned(addr)) + 1, addr'length));
                 end if;
                 if pop_en = '1' then
-                    addr <= addr - 1;
+                    addr <= std_logic_vector(to_unsigned(to_integer(unsigned(addr)) - 1, addr'length));
                 end if;
                 full_tmp <= '1' when addr = "111111111" else '0';
                 empty_tmp <= '1' when addr = "000000000" else '0';
