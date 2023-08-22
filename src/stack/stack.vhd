@@ -6,10 +6,9 @@ library unisim;
 use unisim.vcomponents.all;
 
 entity stack is port( 
-    clk, push, pop, clear : in std_logic;
+    clk, push, pop, clear, peek : in std_logic;
     din : in std_logic_vector(7 downto 0);
     dout : out std_logic_vector(7 downto 0);
-    sp : out std_logic_vector(8 downto 0); -- tmp for debugging
     full, empty : out std_logic);
 end stack;
 
@@ -26,25 +25,21 @@ architecture stack_arch of stack is
     end component;
 
     signal addr : std_logic_vector(8 downto 0);
-    signal push_en, pop_en, clear_en : std_logic;
+    signal push_en, pop_en, peek_en, ram_enable : std_logic;
     signal full_tmp : std_logic := '0';
     signal empty_tmp : std_logic := '1';
 	 
     signal stack_pointer : integer := 0;
-    signal ram_enable : std_logic;
 begin
     push_en <= push and not full_tmp;
     pop_en <= pop and not empty_tmp;
-    clear_en <= clear;
-    ram_enable <= push or pop or clear;
-
-    -- tmp
-    sp <= std_logic_vector(to_unsigned(stack_pointer, sp'length));
+    peek_en <= peek and not empty_tmp;
+    ram_enable <= push or pop or clear or peek;
 
     RAMB4_S8_inst : RAMB4_S8 port map(
         we => push_en,
         en => ram_enable,
-        rst => clear_en,
+        rst => clear,
         clk => clk,
         addr => addr,
         di => din,
@@ -53,7 +48,7 @@ begin
     core: process(clk)
     begin
         if (rising_edge(clk)) then
-            if (clear_en = '1') then
+            if (clear = '1') then
                 stack_pointer <= 0;
                 full_tmp <= '0';
             elsif (push_en = '1') then
@@ -81,15 +76,15 @@ begin
         end if;
     end process output_empty;
 	 
-    addr_mux: process(pop_en, stack_pointer)
+    addr_mux: process(pop_en, stack_pointer, peek_en)
     begin
-        if (pop_en = '1' and full_tmp = '0') then
+        if ((pop_en = '1' or peek_en = '1') and full_tmp = '0') then
             addr <= std_logic_vector(to_unsigned(stack_pointer - 1, addr'length));
         else
             addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
         end if;
     end process addr_mux;
 	
-    full <= full_tmp;
     empty <= empty_tmp;
+    full <= full_tmp;
 end stack_arch;
