@@ -9,6 +9,7 @@ entity stack is port(
     clk, push, pop, clear : in std_logic;
     din : in std_logic_vector(7 downto 0);
     dout : out std_logic_vector(7 downto 0);
+	 sp : out integer;
     full, empty : out std_logic);
 end stack;
 
@@ -30,13 +31,14 @@ architecture stack_arch of stack is
     signal pop_data : std_logic_vector(7 downto 0);
     signal full_tmp, empty_tmp : std_logic;
 	 
-    signal stack_pointer : integer;
+    signal stack_pointer : integer := 0;
     signal ram_enable : std_logic;
 begin
     push_en <= push and not full_tmp;
     pop_en <= pop and not empty_tmp;
     clear_en <= clear;
     ram_enable <= push or pop or clear;
+	 sp <= stack_pointer;
 
     RAMB4_S8_inst : RAMB4_S8 port map(
         we => push_en,
@@ -72,7 +74,7 @@ begin
 
     addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
     data <= pop_data;
-    dout <= data;
+	 dout <= data;
     full <= full_tmp;
     empty <= empty_tmp;
 end stack_arch;

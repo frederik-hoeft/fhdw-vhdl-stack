@@ -134,6 +134,11 @@ ipshared
 *.xpi
 *.xwbt
 *.ngm
+*.xmsgs
+*.cmd
+*.exe
+*.wdb
+*.ini
 stack_pad.csv
 stack_pad.txt
 
@@ -142,3 +147,4 @@ xlnx_auto_0_xdb/
 _xmsgs/
 _ngo/
 xst/
+isim/

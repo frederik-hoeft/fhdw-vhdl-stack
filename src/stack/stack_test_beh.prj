@@ -1,0 +1,2 @@
+vhdl work "stack.vhd"
+vhdl work "stack-tests.vhd"
