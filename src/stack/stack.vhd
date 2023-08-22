@@ -26,10 +26,10 @@ architecture stack_arch of stack is
     end component;
 
     signal addr : std_logic_vector(8 downto 0);
-    signal data : std_logic_vector(7 downto 0);
     signal push_en, pop_en, clear_en : std_logic;
     signal pop_data : std_logic_vector(7 downto 0);
-    signal full_tmp, empty_tmp : std_logic;
+    signal full_tmp : std_logic := '0';
+	 signal empty_tmp : std_logic := '1';
 	 
     signal stack_pointer : integer := 0;
     signal ram_enable : std_logic;
@@ -51,38 +51,40 @@ begin
         di => din,
         do => pop_data);
 
-    process(clk)
+    core: process(clk)
     begin
         if (rising_edge(clk)) then
             if (clear_en = '1') then
                 stack_pointer <= 0;
                 full_tmp <= '0';
-                full <= '0';
             elsif (push_en = '1') then
                 if (stack_pointer = 511) then
                     full_tmp <= '1';
-                    full <= '1';
                 else
                     stack_pointer <= stack_pointer + 1;
                 end if;
             elsif (pop_en = '1') then
                 if (full_tmp = '1') then
                     full_tmp <= '0';
-                    full <= '0';
                 else
                     stack_pointer <= stack_pointer - 1;
                 end if;
-            end if;
-            if (stack_pointer = 0) then
-                empty_tmp <= '1';
-            else 
-                empty_tmp <= '0';
+					 dout <= pop_data;
             end if;
         end if;
-    end process;
-
+    end process core;
+	 
+	 output_empty: process(stack_pointer)
+	 begin
+        if (stack_pointer = 0) then
+				empty_tmp <= '1';
+		  else
+		      empty_tmp <= '0';
+		  end if;
+    end process output_empty;
+	
+	 full <= full_tmp;
     addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
-    data <= pop_data;
-    dout <= data;
+    --dout <= data;
     empty <= empty_tmp;
 end stack_arch;

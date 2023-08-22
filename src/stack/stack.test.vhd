@@ -12,7 +12,7 @@ architecture testbench of stack_tb is
             clk, push, pop, clear : in std_logic;
             din : in std_logic_vector(7 downto 0);
             dout : out std_logic_vector(7 downto 0);
-				sp : out integer;
+				sp : out std_logic_vector(8 downto 0);
             full, empty : out std_logic);
     end component;
 
@@ -24,7 +24,7 @@ architecture testbench of stack_tb is
     signal dout : std_logic_vector(7 downto 0);
     signal full : std_logic;
     signal empty : std_logic;
-	 signal sp : integer;
+	 signal sp : std_logic_vector(8 downto 0);
 
     constant clock_period : time := 10 ns;
 
