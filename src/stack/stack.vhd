@@ -9,7 +9,7 @@ entity stack is port(
     clk, push, pop, clear : in std_logic;
     din : in std_logic_vector(7 downto 0);
     dout : out std_logic_vector(7 downto 0);
-	 sp : out integer;
+    sp : out std_logic_vector(8 downto 0); -- tmp for debugging
     full, empty : out std_logic);
 end stack;
 
@@ -38,7 +38,9 @@ begin
     pop_en <= pop and not empty_tmp;
     clear_en <= clear;
     ram_enable <= push or pop or clear;
-	 sp <= stack_pointer;
+
+    -- tmp
+    sp <= std_logic_vector(to_unsigned(stack_pointer, sp'length));
 
     RAMB4_S8_inst : RAMB4_S8 port map(
         we => push_en,
@@ -54,15 +56,22 @@ begin
         if (rising_edge(clk)) then
             if (clear_en = '1') then
                 stack_pointer <= 0;
-            elsif (push_en = '1') then
-                stack_pointer <= stack_pointer + 1;
-            elsif (pop_en = '1') then
-                stack_pointer <= stack_pointer - 1;
-            end if;
-            if (stack_pointer = 512) then
-                full_tmp <= '1';
-            else 
                 full_tmp <= '0';
+                full <= '0';
+            elsif (push_en = '1') then
+                if (stack_pointer = 511) then
+                    full_tmp <= '1';
+                    full <= '1';
+                else
+                    stack_pointer <= stack_pointer + 1;
+                end if;
+            elsif (pop_en = '1') then
+                if (full_tmp = '1') then
+                    full_tmp <= '0';
+                    full <= '0';
+                else
+                    stack_pointer <= stack_pointer - 1;
+                end if;
             end if;
             if (stack_pointer = 0) then
                 empty_tmp <= '1';
@@ -74,7 +83,6 @@ begin
 
     addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
     data <= pop_data;
-	 dout <= data;
-    full <= full_tmp;
+    dout <= data;
     empty <= empty_tmp;
 end stack_arch;
