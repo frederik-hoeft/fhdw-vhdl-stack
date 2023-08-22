@@ -119,6 +119,23 @@ ipshared
 *.xrpt
 *.xml
 *.xreport
+*.bgn
+*.bit
+*.drc
+*.ncd
+*.pad
+*.par
+*.pcf
+*.ptwx
+*.twr
+*.twx
+*.unroutes
+*.ut
+*.xpi
+*.xwbt
+*.ngm
+stack_pad.csv
+stack_pad.txt
 
 # custom dirs
 xlnx_auto_0_xdb/
