@@ -28,7 +28,7 @@ architecture stack_arch of stack is
     signal addr : std_logic_vector(8 downto 0);
     signal push_en, pop_en, clear_en : std_logic;
     signal full_tmp : std_logic := '0';
-	 signal empty_tmp : std_logic := '1';
+    signal empty_tmp : std_logic := '1';
 	 
     signal stack_pointer : integer := 0;
     signal ram_enable : std_logic;

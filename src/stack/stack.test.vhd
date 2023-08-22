@@ -61,7 +61,7 @@ begin
         pop <= '1';
         wait for clock_period;
         pop <= '0';
-		  assert dout = "00000001" report "Test 1 failed" severity error;
+        assert dout = "00000001" report "Test 1 failed" severity error;
         wait for clock_period;
         wait for clock_period;
         wait for clock_period;
@@ -83,8 +83,8 @@ begin
             pop <= '1';
             wait for clock_period;
             pop <= '0';
-            assert to_integer(unsigned(dout)) = i report "Pop failed" severity error;
             wait for clock_period;
+            assert dout = std_logic_vector(to_unsigned(i, dout'length)) report "Pop failed" severity error;
         end loop;
         assert empty = '1' report "Test 3 failed" severity error;
 
