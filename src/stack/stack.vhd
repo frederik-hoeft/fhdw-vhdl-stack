@@ -27,7 +27,6 @@ architecture stack_arch of stack is
 
     signal addr : std_logic_vector(8 downto 0);
     signal push_en, pop_en, clear_en : std_logic;
-    signal pop_data : std_logic_vector(7 downto 0);
     signal full_tmp : std_logic := '0';
 	 signal empty_tmp : std_logic := '1';
 	 
@@ -49,7 +48,7 @@ begin
         clk => clk,
         addr => addr,
         di => din,
-        do => pop_data);
+        do => dout);
 
     core: process(clk)
     begin
@@ -69,22 +68,28 @@ begin
                 else
                     stack_pointer <= stack_pointer - 1;
                 end if;
-					 dout <= pop_data;
             end if;
         end if;
     end process core;
 	 
-	 output_empty: process(stack_pointer)
-	 begin
+    output_empty: process(stack_pointer)
+    begin
         if (stack_pointer = 0) then
-				empty_tmp <= '1';
-		  else
-		      empty_tmp <= '0';
-		  end if;
+            empty_tmp <= '1';
+        else
+            empty_tmp <= '0';
+        end if;
     end process output_empty;
+	 
+    addr_mux: process(pop_en, stack_pointer)
+    begin
+        if (pop_en = '1' and full_tmp = '0') then
+            addr <= std_logic_vector(to_unsigned(stack_pointer - 1, addr'length));
+        else
+            addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
+        end if;
+    end process addr_mux;
 	
-	 full <= full_tmp;
-    addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
-    --dout <= data;
+    full <= full_tmp;
     empty <= empty_tmp;
 end stack_arch;

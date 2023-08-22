@@ -24,7 +24,7 @@ architecture testbench of stack_tb is
     signal dout : std_logic_vector(7 downto 0);
     signal full : std_logic;
     signal empty : std_logic;
-	 signal sp : std_logic_vector(8 downto 0);
+    signal sp : std_logic_vector(8 downto 0);
 
     constant clock_period : time := 10 ns;
 
@@ -40,7 +40,7 @@ begin
 		  sp => sp,
         empty => empty
     );
-
+    
     clk_process : process
     begin
         while now < 24 us loop
@@ -61,11 +61,12 @@ begin
         pop <= '1';
         wait for clock_period;
         pop <= '0';
+		  assert dout = "00000001" report "Test 1 failed" severity error;
         wait for clock_period;
-        assert dout = "00000001" report "Test 1 failed" severity error;
-
+        wait for clock_period;
+        wait for clock_period;
         -- Test 2: Full
-        for i in 1 to 512 loop
+        for i in 0 to 511 loop
             push <= '1';
             din <= std_logic_vector(to_unsigned(i, din'length));
             wait for clock_period;
@@ -73,12 +74,16 @@ begin
             wait for clock_period;
         end loop;
         assert full = '1' report "Test 2 failed" severity error;
-
+        
+        wait for clock_period;
+        wait for clock_period;
+        
         -- Test 3: Empty
-        for i in 1 to 512 loop
+        for i in 511 downto 0 loop
             pop <= '1';
             wait for clock_period;
             pop <= '0';
+            assert to_integer(unsigned(dout)) = i report "Pop failed" severity error;
             wait for clock_period;
         end loop;
         assert empty = '1' report "Test 3 failed" severity error;
