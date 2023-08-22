@@ -103,3 +103,25 @@
 */*/*/bd/*/ip/*/*.tcl
 hw_handoff
 ipshared
+
+# custom files
+*.bld
+*.cmd_log
+*.lso
+*.ngc
+*.ngd
+*.ngr
+*.stx
+*.gise
+*.syr
+*.map
+*.mrp
+*.xrpt
+*.xml
+*.xreport
+
+# custom dirs
+xlnx_auto_0_xdb/
+_xmsgs/
+_ngo/
+xst/
