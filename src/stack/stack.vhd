@@ -23,46 +23,43 @@ architecture stack_arch of stack is
         di : in std_logic_vector(7 downto 0); -- Data Input Bus
         do : out std_logic_vector(7 downto 0)); -- Data Output Bus
     end component;
-    signal ram_we, ram_rst, ram_clk : std_logic;
-    signal ram_addr : std_logic_vector(8 downto 0);
-    signal stack_pointer : integer;
-begin
-    ram : RAMB4_S8 port map(
-        we => ram_we, en => '1', rst => ram_rst, clk => clk, 
-        addr => ram_addr, di => din, do => dout);
-    
-    process(clk)
+
+    signal addr : std_logic_vector(8 downto 0);
+    signal data : std_logic_vector(7 downto 0);
+    signal push_en, pop_en, clear_en : std_logic;
+    signal pop_data : std_logic_vector(7 downto 0);
+    signal full_tmp, empty_tmp : std_logic;
+
     begin
-        if rising_edge(clk) then
-            -- Clear the RAM and reset the stack pointer on clear signal
-            if clear = '1' then
-                ram_we <= '1';
-                ram_rst <= '1';
-                ram_addr <= (others => '0');
-                stack_pointer <= 0;
-            else
-                ram_we <= '0';
-                ram_rst <= '0';
+        push_en <= push and not full_tmp;
+        pop_en <= pop and not empty_tmp;
+        clear_en <= clear;
 
-                -- Push
-                if push = '1' and full = '0' then
-                    ram_we <= '1';
-                    ram_addr <= std_logic_vector(to_unsigned(stack_pointer, ram_addr'length));
-                    stack_pointer <= stack_pointer + 1;
-                end if;
+        RAMB4_S8_inst : RAMB4_S8 port map(
+            we => push_en,
+            en => push or pop or clear,
+            rst => clear_en,
+            clk => clk,
+            addr => addr,
+            di => din,
+            do => pop_data);
 
-                -- Pop
-                if pop = '1' and empty = '0' then
-                    ram_addr <= std_logic_vector(to_unsigned(stack_pointer - 1, ram_addr'length));
-                    stack_pointer <= stack_pointer - 1;
+        process(clk)
+        begin
+            if rising_edge(clk) then
+                if push_en = '1' then
+                    addr <= addr + 1;
                 end if;
+                if pop_en = '1' then
+                    addr <= addr - 1;
+                end if;
+                full_tmp <= '1' when addr = "111111111" else '0';
+                empty_tmp <= '1' when addr = "000000000" else '0';
             end if;
-        end if;
-    end process;
+        end process;
 
-    -- Detect full and empty conditions
-    full <= '1' when stack_pointer >= 512 else '0';
-    empty <= '1' when stack_pointer = 0 else '0';
-
+        data <= pop_data;
+        dout <= data;
+        full <= full_tmp;
+        empty <= empty_tmp;
 end stack_arch;
-
