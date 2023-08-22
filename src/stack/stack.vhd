@@ -32,48 +32,47 @@ architecture stack_arch of stack is
 	 
     signal stack_pointer : integer;
     signal ram_enable : std_logic;
+begin
+    push_en <= push and not full_tmp;
+    pop_en <= pop and not empty_tmp;
+    clear_en <= clear;
+    ram_enable <= push or pop or clear;
 
+    RAMB4_S8_inst : RAMB4_S8 port map(
+        we => push_en,
+        en => ram_enable,
+        rst => clear_en,
+        clk => clk,
+        addr => addr,
+        di => din,
+        do => pop_data);
+
+    process(clk)
     begin
-        push_en <= push and not full_tmp;
-        pop_en <= pop and not empty_tmp;
-        clear_en <= clear;
-        ram_enable <= push or pop or clear;
-
-        RAMB4_S8_inst : RAMB4_S8 port map(
-            we => push_en,
-            en => ram_enable,
-            rst => clear_en,
-            clk => clk,
-            addr => addr,
-            di => din,
-            do => pop_data);
-
-        process(clk)
-        begin
-            if (rising_edge(clk)) then
-                if (clear_en = '1') then
-                    stack_pointer <= 0;
-                elsif (push_en = '1') then
-                    stack_pointer <= stack_pointer + 1;
-                elsif (pop_en = '1') then
-                    stack_pointer <= stack_pointer - 1;
-                end if;
-                if (stack_pointer = 512) then
-                    full_tmp <= '1';
-                else 
-                    full_tmp <= '0';
-                end if;
-                if (stack_pointer = 0) then
-                    empty_tmp <= '1';
-                else 
-                    empty_tmp <= '0';
-                end if;
+        if (rising_edge(clk)) then
+            if (clear_en = '1') then
+                stack_pointer <= 0;
+            elsif (push_en = '1') then
+                stack_pointer <= stack_pointer + 1;
+            elsif (pop_en = '1') then
+                stack_pointer <= stack_pointer - 1;
             end if;
-        end process;
+            if (stack_pointer = 512) then
+                full_tmp <= '1';
+            else 
+                full_tmp <= '0';
+            end if;
+            if (stack_pointer = 0) then
+                empty_tmp <= '1';
+            else 
+                empty_tmp <= '0';
+            end if;
+        end if;
+    end process;
 
-        addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
-        data <= pop_data;
-        dout <= data;
-        full <= full_tmp;
-        empty <= empty_tmp;
+    addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
+    data <= pop_data;
+    dout <= data;
+    full <= full_tmp;
+    empty <= empty_tmp;
 end stack_arch;
