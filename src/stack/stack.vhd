@@ -102,9 +102,9 @@ begin
 
     -- "state machine" state refresh (asynchronous status flag update)
     -- there isn't really a clear boundary between this and the transition
-    -- process above, as the stack pointer is the only thing that is actually
-    -- persisted, but these flags are treated like the state of the stack,
-    -- so we update them here. It's really just a matter of terminology.
+    -- process above, as the stack pointer is the only thing that is *actually*
+    -- persisted, but these flags are *treated* like the state of the stack.
+    -- It's really just a matter of terminology.
     -- you could probably call these flags the "virtual state" of the stack.
     -- in any case, these are really just representations of the stack pointer,
     -- so we update them here.
@@ -116,8 +116,12 @@ begin
         else
             empty_flag <= '0';
         end if;
-        -- full flag is MSB of stack pointer (>= 256)
-        full_flag <= stack_pointer(8);
+        -- full flag is MSB of stack pointer
+        if (stack_pointer >= 256) then
+            full_flag <= '1';
+        else
+            full_flag <= '0';
+        end if;
         -- obviously this way of doing things ensures that empty_flag and
         -- full_flag are always valid and mutually exclusive
         -- (assuming no physical shenanigans like manifacturing defects, etc.)
