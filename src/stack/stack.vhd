@@ -28,7 +28,7 @@ architecture stack_arch of stack is
     signal push_en, pop_en, peek_en, ram_enable : std_logic;
     signal full_tmp : std_logic := '0';
     signal empty_tmp : std_logic := '1';
-	 
+
     signal stack_pointer : integer range 0 to 255 := 0;
 begin
     push_en <= push and not full_tmp;
@@ -66,7 +66,7 @@ begin
             end if;
         end if;
     end process core;
-	 
+
     output_empty: process(stack_pointer)
     begin
         if (stack_pointer = 0) then
@@ -75,7 +75,7 @@ begin
             empty_tmp <= '0';
         end if;
     end process output_empty;
-	 
+
     addr_mux: process(pop_en, stack_pointer, peek_en)
     begin
         if ((pop_en = '1' or peek_en = '1') and full_tmp = '0') then
@@ -84,7 +84,7 @@ begin
             addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
         end if;
     end process addr_mux;
-	
+
     empty <= empty_tmp;
     full <= full_tmp;
 end stack_arch;

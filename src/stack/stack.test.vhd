@@ -70,7 +70,7 @@ begin
         wait for clock_period;
         wait for clock_period;
         -- Test 2: Full
-        for i in 0 to 511 loop
+        for i in 0 to 255 loop
             push <= '1';
             din <= std_logic_vector(to_unsigned(i, din'length));
             wait for clock_period;
@@ -87,7 +87,7 @@ begin
         wait for clock_period;
         
         -- Test 3: Empty
-        for i in 511 downto 0 loop
+        for i in 255 downto 0 loop
             peek <= '1';
             wait for clock_period;
             peek <= '0';
