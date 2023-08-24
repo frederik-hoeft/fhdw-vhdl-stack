@@ -11,7 +11,7 @@ entity stack_tb is
 end stack_tb;
 
 architecture test_bench of stack_tb is
-    -- component Declaration for the Unit Under Test (UUT)
+    -- component declaration for the Unit Under Test (UUT)
     component stack is port( 
         clk, push, pop, clear, peek : in std_logic;
         din : in std_logic_vector(7 downto 0);
@@ -19,46 +19,31 @@ architecture test_bench of stack_tb is
         full, empty : out std_logic);
     end component;
 
-    --Inputs
-    signal clk: std_logic := '0';
-    signal btn_toggle: std_logic_vector(0 downto 0) := "0";
-    signal btn_reset : std_logic_vector(0 downto 0);
-    signal sys_reset : std_logic_vector(0 downto 0);
+    -- inputs
+    signal clk : std_logic := '0';
+    signal push : std_logic_vector(0 downto 0) := (others => '0');
+    signal pop : std_logic_vector(0 downto 0) := (others => '0');
+    signal peek : std_logic_vector(0 downto 0) := (others => '0');
+    signal clear : std_logic_vector(0 downto 0) := (others => '0');
+    signal din : std_logic_vector(7 downto 0) := (others => '0');
 
-    --Outputs
-    signal watch_reset : std_logic_vector(0 downto 0);
-    signal watch_running : std_logic_vector(0 downto 0);
+    -- outputs
+    signal dout : std_logic_vector(7 downto 0);
+    signal full : std_logic_vector(0 downto 0);
+    signal empty : std_logic_vector(0 downto 0);
 
-    type signal_function is access procedure(line : string);
-    
-    type signal_data is record
-        name         : string;
-        value        : std_logic;
-        load_function : signal_function;
-    end record signal_data;
-    
-    signal btn_toggle, btn_reset, sys_reset : std_logic;
-    signal signals : array(0 to 2) of signal_data :=
-    (
-        ("btn_toggle", btn_toggle, 
-            procedure(line : string) is
-            begin
-                btn_toggle <= std_logic'val(line(1));
-            end procedure),
-        ("btn_reset", btn_reset, 
-            procedure(line : string) is
-            begin
-                btn_reset <= std_logic'val(line(1));
-            end procedure),
-        ("sys_reset", sys_reset, 
-            procedure(line : string) is
-            begin
-                sys_reset <= std_logic'val(line(1));
-            end procedure)
-    );
-
-    --Variablen fuer den Simulationsablauf
+    -- simulation
     signal DebugVariable : boolean:=true;
+    signal is_first_monitor_call : boolean := true;
+
+    -- monitoring
+    shared variable expected_full : string(0 downto 0);
+    shared variable expected_empty : string(0 downto 0);
+    shared variable expected_dout : string(7 downto 0);
+    shared variable success : boolean := true;
+
+    -- constants
+    constant clock_period : time := 50 ns;
     --=============================================================
     --Functions
     function char2std_logic (ch: in character) return std_logic is
@@ -120,71 +105,104 @@ architecture test_bench of stack_tb is
         return result;
     end std_logic2string;
 
-    shared variable expected1 : string(1 downto 1);
-    shared variable expected2 : string(1 downto 1);
+    function assert_equals(expected: std_logic_vector, actual: std_logic_vector, name: string) return boolean is
+    begin
+        assert expected = actual
+            report "Assert failed for signal '" & name & "': expected: " & expected & ", actual: " & actual
+            severity warning;
+        return (expected'length = actual'length) and (expected = actual);
+    end assert_equals;
 
 -- Testbench
 begin
-    -- Taktgenerator
-    clk <= not clk after 50 ns;
+    -- clock generator
+    clk <= not clk after clock_period;
 
-    uut: stopwatch_controller port map(clk=>clk, btn_toggle=>btn_toggle(0), btn_reset=>btn_reset(0), sys_reset=>sys_reset(0), watch_reset=>watch_reset(0), watch_running=>watch_running(0));
+    uut : stack port map(
+        clk => clk,
+        push => push(0),
+        pop => pop(0),
+        peek => peek(0),
+        clear => clear(0),
+        din => din,
+        dout => dout,
+        full => full(0),
+        empty => empty(0)
+    );
 
     STIMULI: process(clk)
-        file testpattern: text OPEN READ_MODE is "stopwatch_controller-inputs.txt";
+        file testpattern: text OPEN READ_MODE is "tb-inputs.txt";
         variable var_line: line;
         variable whitespace: character;
-        variable var1: string(1 downto 1);
-        variable var2: string(1 downto 1);
-        variable var3: string(1 downto 1);
+        variable buffer_1: string(0 downto 0);
+        variable buffer_8: string(7 downto 0);
     begin
         assert DebugVariable report "STIMULI" severity note;
-        if(clk'event and clk = '1') then
+        if(falling_edge(clk)) then
             if(not endfile(testpattern)) then
                 readline(testpattern, var_line);
-                read(var_line, var1);
-                btn_toggle <= string2std_logic(var1);
-                -- ueberspringen des Leerzeichens
+                -- push
+                read(var_line, buffer_1);
+                push <= string2std_logic(buffer_1);
                 read(var_line, whitespace);
-                read(var_line, var2);
-                btn_reset <= string2std_logic(var2);
+                -- pop
+                read(var_line, buffer_1);
+                pop <= string2std_logic(buffer_1);
                 read(var_line, whitespace);
-                read(var_line, var3);
-                sys_reset <= string2std_logic(var3);
+                -- peek
+                read(var_line, buffer_1);
+                peek <= string2std_logic(buffer_1);
+                read(var_line, whitespace);
+                -- clear
+                read(var_line, buffer_1);
+                clear <= string2std_logic(buffer_1);
+                read(var_line, whitespace);
+                -- din
+                read(var_line, buffer_8);
+                din <= string2std_logic(buffer_8);
             else
-                btn_toggle <= "0";
-                btn_reset <= "0";
-                sys_reset <= "1";
+                push <= "0";
+                pop <= "0";
+                peek <= "0";
+                clear <= "1";
+                din <= (others => '0');
             end if;
         end if;
     end process STIMULI;
 
     RESPONSE: process(clk)
-        file comparison_pattern: text OPEN READ_MODE is "stopwatch_controller-outputs.txt";
+        file comparison_pattern: text OPEN READ_MODE is "tb-expected.txt";
         variable var_line: line;
         variable whitespace: character;
-        variable var1: string(1 downto 1);
-        variable var2: string(1 downto 1);
+        variable buffer_1: string(0 downto 0);
+        variable buffer_8: string(7 downto 0);
     begin
         assert DebugVariable report "EXPECTED" severity note;
-        if(clk'event and clk = '1') then
+        if(rising_edge(clk)) then
             if(now > 100 ns) then
+                success := true;
                 if(not endfile(comparison_pattern)) then
                     readline(comparison_pattern, var_line);
-                    read(var_line, var1);
+                    -- full
+                    read(var_line, buffer_1);
+                    expected_full := buffer_1;
                     read(var_line, whitespace);
-                    read(var_line, var2);
-                    expected1 := var1;
-                    assert string2std_logic(var1) = watch_running
-                        report "Vergleich fehlerhaft!" & "    Erwartungswert: " & var1 & "    Ergebnis: " & std_logic2string(watch_running)
-                        severity warning;
-                    expected2 := var2;
-                    assert string2std_logic(var2) = watch_reset
-                        report "Vergleich fehlerhaft!" & "    Erwartungswert: " & var2 & "    Ergebnis: " & std_logic2string(watch_reset)
-                        severity warning;
+                    success := success and assert_equals(string2std_logic(expected_full), full, "full");
+
+                    -- empty
+                    read(var_line, buffer_1);
+                    expected_empty := buffer_1;
+                    read(var_line, whitespace);
+                    success := success and assert_equals(string2std_logic(expected_empty), empty, "empty");
+                    
+                    -- dout
+                    read(var_line, buffer_8);
+                    expected_dout := buffer_8;
+                    success := success and assert_equals(string2std_logic(expected_dout), dout, "dout");
                 else 
-                    expected1 := (others => 'X');
-                    expected2 := (others => 'X');
+                    expected_full := (others => 'X');
+                    expected_empty := (others => 'X');
+                    expected_dout := (others => 'X');
                 end if;
             end if;
         end if;
@@ -192,41 +210,62 @@ begin
     end process RESPONSE;
 
     MONITOR: process(clk)
-        file protocol: text OPEN WRITE_MODE is "stopwatch_controller-test.log";
+        file protocol: text OPEN WRITE_MODE is "tb-log.csv";
         variable var_line: line;
-        variable whitespace: character := ' ';
-        variable var1: string(1 downto 1);
-        variable var2: string(1 downto 1);
-        variable var3: string(1 downto 1);
-        variable var4: string(1 downto 1);
-        variable var5: string(1 downto 1);
+        variable separator: character := ',';
+        variable v_push: string(0 downto 0);
+        variable v_pop: string(0 downto 0);
+        variable v_peek: string(0 downto 0);
+        variable v_clear: string(0 downto 0);
+        variable v_din: string(7 downto 0);
+        variable v_full: string(0 downto 0);
+        variable v_empty: string(0 downto 0);
+        variable v_dout: string(7 downto 0);
+        variable v_status: string(6 downto 0);
         variable simulation_time: time;
     begin
         assert DebugVariable report "MONITOR" severity note;
+        if (is_first_monitor_call) then
+            is_first_monitor_call := false;
+            write(var_line, "<STATUS> at <TIME> (@" & clock_period & "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e,a)");
+            writeline(protocol, var_line);
+        end if;
         if(now > 100 ns) then
-            if(clk'event and clk = '1') then
-                var1 := std_logic2string(btn_toggle);
-                var2 := std_logic2string(btn_reset);
-                var3 := std_logic2string(sys_reset);
-                var4 := std_logic2string(watch_running); 
-                var5 := std_logic2string(watch_reset);
+            if(rising_edge(clk)) then
+                v_push := std_logic2string(push);
+                v_pop := std_logic2string(pop);
+                v_peek := std_logic2string(peek);
+                v_clear := std_logic2string(clear);
+                v_din := std_logic2string(din);
+                v_push := std_logic2string(push);
+                v_full := std_logic2string(full);
+                v_empty := std_logic2string(empty);
+                v_dout := std_logic2string(dout);
+                if (success) then
+                    v_status := "SUCCESS";
+                else
+                    v_status := "FAILURE";
+                end if;
                 simulation_time := now;
-                write(var_line, "btn_toggle: " & var1);
-                write(var_line, whitespace);
-                write(var_line, "btn_reset: " & var2);
-                write(var_line, whitespace);
-                write(var_line, "sys_reset: " & var3);
-                write(var_line, whitespace);
-                write(var_line, "watch_running: " & var4);
-                write(var_line, whitespace);
-                write(var_line, "watch_reset: " & var5);
-                write(var_line, whitespace);
-                write(var_line, "Expected watch_running: " & expected1);
-                write(var_line, whitespace);
-                write(var_line, "Expected watch_reset: " & expected2);
-                write(var_line, whitespace);
-                write(var_line, "Time: ");
-                write(var_line, simulation_time);
+                write(var_line, v_status & " at " & simulation_time)
+                write(var_line, separator);
+                write(var_line, separator);
+                write(var_line, v_push);
+                write(var_line, separator);
+                write(var_line, v_pop);
+                write(var_line, separator);
+                write(var_line, v_peek);
+                write(var_line, separator);
+                write(var_line, v_clear);
+                write(var_line, separator);
+                write(var_line, v_din);
+                write(var_line, separator);
+                write(var_line, separator);
+                write(var_line, expected_full & ":" & v_full);
+                write(var_line, separator);
+                write(var_line, expected_empty & ":" & v_empty);
+                write(var_line, separator);
+                write(var_line, expected_dout & ":" & v_dout);
                 writeline(protocol, var_line);
             end if;
         end if;     
