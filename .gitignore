@@ -142,6 +142,7 @@ ipshared
 *.xst
 stack_pad.csv
 stack_pad.txt
+stack_tb_stx_beh.prj
 
 # custom dirs
 xlnx_auto_0_xdb/
