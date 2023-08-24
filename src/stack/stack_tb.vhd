@@ -111,7 +111,7 @@ architecture test_bench of stack_tb is
     end std_logic2string;
 
     -- asserts that two std_logic_vectors are equal and returns true if they are equal
-    -- ignores '-' in the expected vector
+    -- allows don't care values ('-') in the expected vector
     function assert_equals(expected: std_logic_vector; actual: std_logic_vector; name: string) return boolean is
         variable bit_equals : boolean;
         variable assert_success : boolean;
