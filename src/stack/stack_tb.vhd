@@ -246,7 +246,7 @@ begin
             is_first_monitor_call <= false;
             write(var_line, "<STATUS> at <TIME> (@");
             write(var_line, clock_period);
-            write(var_line, "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e,a)");
+            write(var_line, "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e:a)");
             writeline(protocol, var_line);
         end if;
         if(now >= clock_period and not expected_eof) then
