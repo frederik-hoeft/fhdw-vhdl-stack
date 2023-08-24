@@ -76,7 +76,7 @@ begin
         end if;
     end process output_empty;
 
-    addr_mux: process(pop_en, stack_pointer, peek_en)
+    addr_mux: process(pop_en, stack_pointer, peek_en, full_tmp)
     begin
         if ((pop_en = '1' or peek_en = '1') and full_tmp = '0') then
             addr <= std_logic_vector(to_unsigned(stack_pointer - 1, addr'length));

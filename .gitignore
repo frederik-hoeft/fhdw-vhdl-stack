@@ -148,3 +148,6 @@ _xmsgs/
 _ngo/
 xst/
 isim/
+
+# vim
+*.swp

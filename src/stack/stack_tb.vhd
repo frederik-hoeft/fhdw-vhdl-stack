@@ -20,7 +20,7 @@ architecture test_bench of stack_tb is
     end component;
 
     -- inputs
-    signal clk : std_logic := '0';
+    signal clk : std_logic := '1';
     signal push : std_logic_vector(0 downto 0) := (others => '0');
     signal pop : std_logic_vector(0 downto 0) := (others => '0');
     signal peek : std_logic_vector(0 downto 0) := (others => '0');
@@ -37,13 +37,14 @@ architecture test_bench of stack_tb is
     signal is_first_monitor_call : boolean := true;
 
     -- monitoring
-    shared variable expected_full : string(0 downto 0);
-    shared variable expected_empty : string(0 downto 0);
-    shared variable expected_dout : string(7 downto 0);
+    shared variable expected_full : string(1 downto 1);
+    shared variable expected_empty : string(1 downto 1);
+    shared variable expected_dout : string(8 downto 1);
     shared variable success : boolean := true;
+    shared variable expected_eof : boolean := false;
 
     -- constants
-    constant clock_period : time := 50 ns;
+    constant clock_period : time := 100 ns;
     --=============================================================
     --Functions
     function char2std_logic (ch: in character) return std_logic is
@@ -106,17 +107,33 @@ architecture test_bench of stack_tb is
     end std_logic2string;
 
     function assert_equals(expected: std_logic_vector; actual: std_logic_vector; name: string) return boolean is
+        variable bit_equals : boolean;
+        variable assert_success : boolean;
+        variable bit_e : std_logic;
+        variable bit_a : std_logic;
     begin
-        assert expected = actual
+        assert_success := expected'length = actual'length;
+        if (assert_success) then
+            for i in expected'range loop
+                bit_e := expected(i);
+                bit_a := actual(i);
+                case bit_e is
+                    when '-' => bit_equals := true;
+                    when others => bit_equals := (bit_e = bit_a);
+                end case;
+                assert_success := assert_success and bit_equals;
+            end loop;
+        end if;
+        assert assert_success
             report "Assert failed for signal '" & name & "': expected: " & std_logic2string(expected) & ", actual: " & std_logic2string(actual)
             severity warning;
-        return (expected'length = actual'length) and (expected = actual);
+        return assert_success;
     end assert_equals;
 
 -- Testbench
 begin
     -- clock generator
-    clk <= not clk after clock_period;
+    clk <= not clk after clock_period / 2;
 
     uut : stack port map(
         clk => clk,
@@ -134,8 +151,8 @@ begin
         file testpattern: text OPEN READ_MODE is "tb-inputs.txt";
         variable var_line: line;
         variable whitespace: character;
-        variable buffer_1: string(0 downto 0);
-        variable buffer_8: string(7 downto 0);
+        variable buffer_1: string(1 downto 1);
+        variable buffer_8: string(8 downto 1);
     begin
         assert DebugVariable report "STIMULI" severity note;
         if(falling_edge(clk)) then
@@ -174,12 +191,12 @@ begin
         file comparison_pattern: text OPEN READ_MODE is "tb-expected.txt";
         variable var_line: line;
         variable whitespace: character;
-        variable buffer_1: string(0 downto 0);
-        variable buffer_8: string(7 downto 0);
+        variable buffer_1: string(1 downto 1);
+        variable buffer_8: string(8 downto 1);
     begin
         assert DebugVariable report "EXPECTED" severity note;
         if(rising_edge(clk)) then
-            if(now > 100 ns) then
+            if(now >= clock_period) then
                 success := true;
                 if(not endfile(comparison_pattern)) then
                     readline(comparison_pattern, var_line);
@@ -200,28 +217,28 @@ begin
                     expected_dout := buffer_8;
                     success := success and assert_equals(string2std_logic(expected_dout), dout, "dout");
                 else 
+                    expected_eof := true;
                     expected_full := (others => 'X');
                     expected_empty := (others => 'X');
                     expected_dout := (others => 'X');
                 end if;
             end if;
         end if;
-        --out2 <= StSpKnopf * ReKnopf;
     end process RESPONSE;
 
     MONITOR: process(clk)
         file protocol: text OPEN WRITE_MODE is "tb-log.csv";
         variable var_line: line;
         variable separator: character := ',';
-        variable v_push: string(0 downto 0);
-        variable v_pop: string(0 downto 0);
-        variable v_peek: string(0 downto 0);
-        variable v_clear: string(0 downto 0);
-        variable v_din: string(7 downto 0);
-        variable v_full: string(0 downto 0);
-        variable v_empty: string(0 downto 0);
-        variable v_dout: string(7 downto 0);
-        variable v_status: string(6 downto 0);
+        variable v_push: string(1 downto 1);
+        variable v_pop: string(1 downto 1);
+        variable v_peek: string(1 downto 1);
+        variable v_clear: string(1 downto 1);
+        variable v_din: string(8 downto 1);
+        variable v_full: string(1 downto 1);
+        variable v_empty: string(1 downto 1);
+        variable v_dout: string(8 downto 1);
+        variable v_status: string(7 downto 1);
         variable simulation_time: time;
     begin
         assert DebugVariable report "MONITOR" severity note;
@@ -232,7 +249,7 @@ begin
             write(var_line, "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e,a)");
             writeline(protocol, var_line);
         end if;
-        if(now > 100 ns) then
+        if(now >= clock_period and not expected_eof) then
             if(rising_edge(clk)) then
                 v_push := std_logic2string(push);
                 v_pop := std_logic2string(pop);
