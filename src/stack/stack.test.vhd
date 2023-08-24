@@ -1,4 +1,3 @@
--- FILEPATH: c:\Users\frederik\fhdw-vhdl-stack\src\stack\stack_tb.vhd
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
