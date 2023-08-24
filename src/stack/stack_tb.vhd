@@ -227,7 +227,9 @@ begin
         assert DebugVariable report "MONITOR" severity note;
         if (is_first_monitor_call) then
             is_first_monitor_call <= false;
-            write(var_line, "<STATUS> at <TIME> (@" & clock_period & "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e,a)");
+            write(var_line, "<STATUS> at <TIME> (@");
+            write(var_line, clock_period);
+            write(var_line, "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e,a)");
             writeline(protocol, var_line);
         end if;
         if(now > 100 ns) then
@@ -247,7 +249,8 @@ begin
                     v_status := "FAILURE";
                 end if;
                 simulation_time := now;
-                write(var_line, v_status & " at " & simulation_time);
+                write(var_line, v_status & " at ");
+                write(var_line, simulation_time);
                 write(var_line, separator);
                 write(var_line, separator);
                 write(var_line, v_push);
