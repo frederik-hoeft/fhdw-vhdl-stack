@@ -117,11 +117,7 @@ begin
             empty_flag <= '0';
         end if;
         -- full flag is MSB of stack pointer
-        if (stack_pointer >= 256) then
-            full_flag <= '1';
-        else
-            full_flag <= '0';
-        end if;
+        full_flag <= std_logic(to_unsigned(stack_pointer, addr'length)(addr'length - 1));
         -- obviously this way of doing things ensures that empty_flag and
         -- full_flag are always valid and mutually exclusive
         -- (assuming no physical shenanigans like manifacturing defects, etc.)
