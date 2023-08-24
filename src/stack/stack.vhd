@@ -29,7 +29,7 @@ architecture stack_arch of stack is
     signal full_tmp : std_logic := '0';
     signal empty_tmp : std_logic := '1';
 	 
-    signal stack_pointer : integer := 0;
+    signal stack_pointer : integer range 0 to 255 := 0;
 begin
     push_en <= push and not full_tmp;
     pop_en <= pop and not empty_tmp;
@@ -52,7 +52,7 @@ begin
                 stack_pointer <= 0;
                 full_tmp <= '0';
             elsif (push_en = '1') then
-                if (stack_pointer = 511) then
+                if (stack_pointer = 255) then
                     full_tmp <= '1';
                 else
                     stack_pointer <= stack_pointer + 1;
