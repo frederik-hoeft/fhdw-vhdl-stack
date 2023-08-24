@@ -40,13 +40,15 @@ architecture test_bench of stack_tb is
     shared variable expected_full : string(1 downto 1);
     shared variable expected_empty : string(1 downto 1);
     shared variable expected_dout : string(8 downto 1);
+    -- (monitoring) line status
     shared variable success : boolean := true;
+    -- (monitoring) stop logging after end of file
     shared variable expected_eof : boolean := false;
 
     -- constants
     constant clock_period : time := 100 ns;
     --=============================================================
-    --Functions
+    -- functions
     function char2std_logic (ch: in character) return std_logic is
     begin
         case ch is
@@ -67,6 +69,7 @@ architecture test_bench of stack_tb is
         end case;
     end;
 
+    -- converts a string into a std_logic_vector
     function string2std_logic (s: string) return std_logic_vector is
         variable vector: std_logic_vector(s'LEFT - 1 downto 0);
     begin
@@ -94,6 +97,7 @@ architecture test_bench of stack_tb is
         return c;
     end std_logic2char;
 
+    -- converts a std_logic_vector into a string
     function std_logic2string(slv: std_logic_vector) return string is
         variable result : string (1 to slv'length);
         variable r : integer;
@@ -106,6 +110,8 @@ architecture test_bench of stack_tb is
         return result;
     end std_logic2string;
 
+    -- asserts that two std_logic_vectors are equal and returns true if they are equal
+    -- ignores '-' in the expected vector
     function assert_equals(expected: std_logic_vector; actual: std_logic_vector; name: string) return boolean is
         variable bit_equals : boolean;
         variable assert_success : boolean;
@@ -135,6 +141,7 @@ begin
     -- clock generator
     clk <= not clk after clock_period / 2;
 
+    -- Unit Under Test (UUT)
     uut : stack port map(
         clk => clk,
         push => push(0),
@@ -147,6 +154,7 @@ begin
         empty => empty(0)
     );
 
+    -- Stimulus process
     STIMULI: process(clk)
         file testpattern: text OPEN READ_MODE is "tb-inputs.txt";
         variable var_line: line;
@@ -155,6 +163,7 @@ begin
         variable buffer_8: string(8 downto 1);
     begin
         assert DebugVariable report "STIMULI" severity note;
+        -- start immediately
         if(falling_edge(clk)) then
             if(not endfile(testpattern)) then
                 readline(testpattern, var_line);
@@ -187,6 +196,7 @@ begin
         end if;
     end process STIMULI;
 
+    -- Response process
     RESPONSE: process(clk)
         file comparison_pattern: text OPEN READ_MODE is "tb-expected.txt";
         variable var_line: line;
@@ -196,6 +206,7 @@ begin
     begin
         assert DebugVariable report "EXPECTED" severity note;
         if(rising_edge(clk)) then
+            -- only check after first clock cycle (allow for device to initialize)
             if(now >= clock_period) then
                 success := true;
                 if(not endfile(comparison_pattern)) then
@@ -226,6 +237,7 @@ begin
         end if;
     end process RESPONSE;
 
+    -- Monitor process
     MONITOR: process(clk)
         file protocol: text OPEN WRITE_MODE is "tb-log.csv";
         variable var_line: line;
@@ -242,6 +254,7 @@ begin
         variable simulation_time: time;
     begin
         assert DebugVariable report "MONITOR" severity note;
+        -- write CSV header (obviously only once)
         if (is_first_monitor_call) then
             is_first_monitor_call <= false;
             write(var_line, "<STATUS> at <TIME> (@");
@@ -249,6 +262,7 @@ begin
             write(var_line, "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e:a)");
             writeline(protocol, var_line);
         end if;
+        -- only log after first clock cycle (allow for device to initialize)
         if(now >= clock_period and not expected_eof) then
             if(rising_edge(clk)) then
                 v_push := std_logic2string(push);
