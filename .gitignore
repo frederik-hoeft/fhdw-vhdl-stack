@@ -139,6 +139,7 @@ ipshared
 *.exe
 *.wdb
 *.ini
+*.xst
 stack_pad.csv
 stack_pad.txt
 
