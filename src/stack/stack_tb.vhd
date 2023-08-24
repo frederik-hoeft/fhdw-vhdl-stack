@@ -4,7 +4,7 @@
 
 library ieee;
 use ieee.std_logic_1164.all;
-use stf.textio.all;
+use std.textio.all;
 use ieee.numeric_std.all;
 
 entity stack_tb is
@@ -105,10 +105,10 @@ architecture test_bench of stack_tb is
         return result;
     end std_logic2string;
 
-    function assert_equals(expected: std_logic_vector, actual: std_logic_vector, name: string) return boolean is
+    function assert_equals(expected: std_logic_vector; actual: std_logic_vector; name: string) return boolean is
     begin
         assert expected = actual
-            report "Assert failed for signal '" & name & "': expected: " & expected & ", actual: " & actual
+            report "Assert failed for signal '" & name & "': expected: " & std_logic2string(expected) & ", actual: " & std_logic2string(actual)
             severity warning;
         return (expected'length = actual'length) and (expected = actual);
     end assert_equals;
@@ -226,7 +226,7 @@ begin
     begin
         assert DebugVariable report "MONITOR" severity note;
         if (is_first_monitor_call) then
-            is_first_monitor_call := false;
+            is_first_monitor_call <= false;
             write(var_line, "<STATUS> at <TIME> (@" & clock_period & "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e,a)");
             writeline(protocol, var_line);
         end if;
@@ -247,7 +247,7 @@ begin
                     v_status := "FAILURE";
                 end if;
                 simulation_time := now;
-                write(var_line, v_status & " at " & simulation_time)
+                write(var_line, v_status & " at " & simulation_time);
                 write(var_line, separator);
                 write(var_line, separator);
                 write(var_line, v_push);
