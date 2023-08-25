@@ -1,0 +1,10 @@
+#-----------------------------------------------------------
+# PlanAhead v14.7 (64-bit)
+# Build 321239 by xbuild on Fri Sep 27 19:24:36 MDT 2013
+# Start of session at: Fri Aug 25 19:44:03 2023
+# Process ID: 6819
+# Log file: /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/planAhead_run_4/planAhead.log
+# Journal file: /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/planAhead_run_4/planAhead.jou
+#-----------------------------------------------------------
+start_gui
+source /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/pa.fromNcd.tcl

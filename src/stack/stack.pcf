@@ -1,0 +1,14 @@
+//! **************************************************************************
+// Written by: Map P.20131013 on Fri Aug 25 20:34:40 2023
+//! **************************************************************************
+
+SCHEMATIC START;
+NET "clk_BUFGP/IBUFG" BEL "clk_BUFGP/BUFG.GCLKMUX" USELOCALCONNECT;
+TIMEGRP clk = BEL "stack_pointer_0" BEL "stack_pointer_1" BEL
+        "stack_pointer_2" BEL "stack_pointer_3" BEL "stack_pointer_4" BEL
+        "stack_pointer_5" BEL "stack_pointer_6" BEL "stack_pointer_7" BEL
+        "stack_pointer_8" BEL "clk_BUFGP/BUFG.GCLKMUX" BEL "clk_BUFGP/BUFG"
+        BEL "RAMB4_S8_inst.A";
+TS_CLK = PERIOD TIMEGRP "clk" 6.5 ns HIGH 50%;
+SCHEMATIC END;
+

@@ -1,0 +1,90 @@
+
+****** PlanAhead v14.7 (64-bit)
+  **** Build 321239 by xbuild on Fri Sep 27 19:24:36 MDT 2013
+    ** Copyright 1986-1999, 2001-2013 Xilinx, Inc. All Rights Reserved.
+
+INFO: [Common 17-78] Attempting to get a license: PlanAhead
+INFO: [Common 17-290] Got license for PlanAhead
+INFO: [Device 21-36] Loading parts and site information from /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/arch.xml
+Parsing RTL primitives file [/home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
+Finished parsing RTL primitives file [/home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/rtl/prims/rtl_prims.xml]
+start_gui
+source /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/pa.fromNcd.tcl
+# create_project -name stack -dir "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/planAhead_run_3" -part xc3s500evq100-4
+# set srcset [get_property srcset [current_run -impl]]
+# set_property design_mode GateLvl $srcset
+# set_property edif_top_file "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ngc" [ get_property srcset [ current_run ] ]
+# add_files -norecurse { {/home/dev/projects/es4/fhdw-vhdl-stack/src/stack} }
+# set_property target_constrs_file "stack.ucf" [current_fileset -constrset]
+Adding file '/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ucf' to fileset 'constrs_1'
+# add_files [list {stack.ucf}] -fileset [get_property constrset [current_run]]
+# link_design
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+Design is defaulting to project part: xc3s500evq100-4
+Release 14.7 - ngc2edif P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Release 14.7 - ngc2edif P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+Reading design stack.ngc ...
+WARNING:NetListWriters:298 - No output is written to stack.xncf, ignored.
+Processing design ...
+   Preping design's networks ...
+   Preping design's macros ...
+  finished :Prep
+Writing EDIF netlist file stack.edif ...
+ngc2edif: Total memory usage is 91528 kilobytes
+
+Parsing EDIF File [./planAhead_run_3/stack.data/cache/stack_ngc_93462e9c.edif]
+Finished Parsing EDIF File [./planAhead_run_3/stack.data/cache/stack_ngc_93462e9c.edif]
+CRITICAL WARNING: [Designutils 20-1022] Could not resolve non-primitive black box cell 'RAMB4_S8' instantiated in module 'RAMB4_S8_inst'.
+Resolution: File names need to match cell names: an EDIF definition will be found in RAMB4_S8.edf; a HDL definition may be placed in any Verilog/VHDL file.
+INFO: [Designutils 20-910] Reading macro library /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn
+Parsing EDIF File [/home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
+Finished Parsing EDIF File [/home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/./parts/xilinx/spartan3e/spartan3e/hd_int_macros.edn]
+CRITICAL WARNING: [Netlist 29-29] Cell 'RAMB4_S8' defined in file 'stack.ngc' is not a supported primitive for spartan3e part: xc3s500evq100-4.  Instance 'RAMB4_S8_inst' will be treated as a black box, not an architecture primitive.
+Loading clock regions from /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/spartan3e/spartan3e/xc3s500e/ClockRegion.xml
+Loading clock buffers from /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/spartan3e/spartan3e/xc3s500e/ClockBuffers.xml
+Loading package from /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/spartan3e/spartan3e/xc3s500e/vq100/Package.xml
+Loading io standards from /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/./parts/xilinx/spartan3e/IOStandards.xml
+INFO: [Device 21-19] Loading pkg sso from /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/spartan3e/spartan3e/xc3s500e/vq100/SSORules.xml
+Loading list of drcs for the architecture : /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/./parts/xilinx/spartan3e/spartan3e/drc.xml
+INFO: [Timing 38-77] Reading timing library /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/spartan3e/spartan3e/spartan3e-4.lib.
+INFO: [Timing 38-34] Done reading timing library /home/dev/software/xilinx/installation/14.7/ISE_DS/PlanAhead/data/parts/xilinx/spartan3e/spartan3e/spartan3e-4.lib.
+Parsing UCF File [/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ucf]
+Finished Parsing UCF File [/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ucf]
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+Phase 0 | Netlist Checksum: a1c1bb31
+# read_xdl -file "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ncd"
+Release 14.7 - xdl P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+WARNING:XDL:213 - The resulting xdl output will not have LUT equation strings or RAM INIT strings.
+Loading device for application Rf_Device from file '3s500e.nph' in environment /home/dev/software/xilinx/installation/14.7/ISE_DS/ISE/.
+   "stack" is an NCD, version 3.2, device xc3s500e, package vq100, speed -4
+Successfully converted design '/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ncd' to '/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.xdl'.
+INFO: [Designutils 20-669] Parsing Placement File : /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ncd
+INFO: [Designutils 20-658] Finished Parsing Placement File : /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ncd
+INFO: [Designutils 20-671] Placed 103 instances
+# if {[catch {read_twx -name results_1 -file "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.twx"} eInfo]} {
+#    puts "WARNING: there was a problem importing \"/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.twx\": $eInfo"
+# }
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-71] No path element with name stack_pointer<0>_rt found. It will be ignored.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-71] No path element with name stack_pointer<0>_rt found. It will be ignored.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-71] No path element with name stack_pointer<0>_rt found. It will be ignored.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+INFO: [Timing 38-67] No destination with name RAMB4_S8_inst.A found. Path will be displayed but may be missing some functionality.
+exit
+ERROR: [Common 17-39] 'stop_gui' failed due to earlier errors.
+INFO: [Common 17-206] Exiting PlanAhead at Fri Aug 25 19:34:33 2023...
+INFO: [Common 17-83] Releasing license: PlanAhead

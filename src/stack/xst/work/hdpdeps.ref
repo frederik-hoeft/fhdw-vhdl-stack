@@ -1,0 +1,9 @@
+V3 5
+FL /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.vhd 2023/08/25.20:18:47 P.20131013
+EN work/stack 1692988468 \
+      FL /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.vhd \
+      PB ieee/std_logic_1164 1381692176 PB ieee/NUMERIC_STD 1381692181 LB unisim \
+      PH unisim/VCOMPONENTS 1381692182
+AR work/stack/stack_arch 1692988469 \
+      FL /home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.vhd EN work/stack 1692988468 \
+      CP RAMB4_S8

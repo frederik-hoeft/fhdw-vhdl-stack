@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -o "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack_tb_isim_beh.exe" -prj "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack_tb_beh.prj" "work.stack_tb" 

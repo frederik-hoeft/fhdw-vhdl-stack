@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ncd
+OUTFILE=/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.bit
+FAMILY=Spartan3E
+PART=xc3s500e-4vq100
+WORKINGDIR=/home/dev/projects/es4/fhdw-vhdl-stack/src/stack
+LICENSE=WebPack
+USER_INFO=212788242_0_0_678
