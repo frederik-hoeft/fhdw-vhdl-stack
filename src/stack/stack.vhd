@@ -7,6 +7,8 @@ use unisim.vcomponents.all;
 
 -- 256x8 Bit Stack
 entity stack is port( 
+    -- the peek port is a legacy pin and only exists for backwards compatibility purposes
+    -- with the test bench. peek is now the default operation when push = pop = clear = 0.
     clk, push, pop, clear, peek : in std_logic;
     din : in std_logic_vector(7 downto 0);
     dout : out std_logic_vector(7 downto 0);
