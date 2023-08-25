@@ -29,7 +29,7 @@ architecture stack_arch of stack is
     signal addr : std_logic_vector(8 downto 0);
 
     -- sanitized input signals
-    signal push_en, pop_en, peek_en, ram_enable : std_logic;
+    signal push_en, pop_en, ram_enable : std_logic;
 
     -- internal flags (status bits)
     -- these flags are directly derived from the stack pointer. 
@@ -45,6 +45,9 @@ architecture stack_arch of stack is
     -- at the same time we can use the MSB as a full flag, simplifying the 
     -- logic required to detect a full stack.
     signal stack_pointer : integer range 0 to 256 := 0;
+    
+    signal sp_dec : std_logic_vector(8 downto 0) := (others => '0');
+    signal sp : std_logic_vector(8 downto 0) := (others => '0');
 begin
     -- instantiate RAM
     RAMB4_S8_inst : RAMB4_S8 port map(
@@ -61,7 +64,6 @@ begin
     -- propagation delay of this logic and our address mux.
     push_en <= push and not full_flag;
     pop_en <= pop and not empty_flag;
-    peek_en <= peek and not empty_flag;
 
     -- we want to allow for same-cycle RAM access (signal -> rising edge -> data < 1 cycle), 
     -- so we just directly forward the user-supplied control signals to the RAM.
@@ -88,15 +90,27 @@ begin
     --           it's the user's responsibility to check the full/empty flags
     --           before pushing/popping.
     transition: process(clk)
+        variable vsp : std_logic_vector(8 downto 0);
+        variable vsp_dec : std_logic_vector(8 downto 0);
+        variable vstack_pointer : integer range 0 to 256 := 0;
     begin
         if (rising_edge(clk)) then
             if (clear = '1') then
-                stack_pointer <= 0;
+                vstack_pointer := 0;
+                vsp := "000000000";
+                vsp_dec := "000000000";
             elsif (push_en = '1') then
-                stack_pointer <= stack_pointer + 1;
+                vsp_dec := std_logic_vector(to_unsigned(stack_pointer, addr'length));
+                vstack_pointer := stack_pointer + 1;
+                vsp := std_logic_vector(to_unsigned(vstack_pointer, addr'length));
             elsif (pop_en = '1') then
-                stack_pointer <= stack_pointer - 1;
+                vstack_pointer := stack_pointer - 1;
+                vsp := std_logic_vector(to_unsigned(vstack_pointer, addr'length));
+                vsp_dec := std_logic_vector(to_unsigned(vstack_pointer - 1, addr'length));
             end if;
+            sp <= vsp;
+            sp_dec <= vsp_dec;
+            stack_pointer <= vstack_pointer;
         end if;
     end process transition;
 
@@ -108,16 +122,16 @@ begin
     -- you could probably call these flags the "virtual state" of the stack.
     -- in any case, these are really just representations of the stack pointer,
     -- so we update them here.
-    state: process(stack_pointer)
+    state: process(sp)
     begin
         -- empty flag is basically just a 9 bit NOR of the stack pointer (== 0)
-        if (stack_pointer = 0) then
+        if (sp = "000000000") then
             empty_flag <= '1';
         else
             empty_flag <= '0';
         end if;
         -- full flag is MSB of stack pointer
-        full_flag <= std_logic(to_unsigned(stack_pointer, addr'length)(addr'length - 1));
+        full_flag <= sp(8);
         -- obviously this way of doing things ensures that empty_flag and
         -- full_flag are always valid and mutually exclusive
         -- (assuming no physical shenanigans like manifacturing defects, etc.)
@@ -135,12 +149,12 @@ begin
     --           break the stack. Clear/push must be evaluated before pop/peek
     --           to ensure correct operation when multiple, mutually exclusive
     --           signals are asserted at the same time.
-    addr_mux: process(stack_pointer, clear, push_en)
+    addr_mux: process(sp, sp_dec, clear, push_en)
     begin
         if (clear = '1' or push_en = '1') then
-            addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
+            addr <= sp;
         else
-            addr <= std_logic_vector(to_unsigned(stack_pointer - 1, addr'length));
+            addr <= sp_dec;
         end if;
     end process addr_mux;
 

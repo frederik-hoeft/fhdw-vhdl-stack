@@ -150,6 +150,7 @@ _xmsgs/
 _ngo/
 xst/
 isim/
+planAhead_run_*/
 
 # vim
 *.swp
