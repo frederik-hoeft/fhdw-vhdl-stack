@@ -7,8 +7,18 @@ use unisim.vcomponents.all;
 
 -- 256x8 Bit Stack
 entity stack is port( 
-    -- the peek port is a legacy pin and only exists for backwards compatibility purposes
-    -- with the test bench. peek is now the default operation when push = pop = clear = 0.
+    -- the peek port is a legacy pin and was at some point optimized out of the design.
+    -- now it only exists for backwards compatibility purposes with the test bench. 
+    -- FYI: peek is now the default operation when push = clear = 0 (also: pop implies peek).
+    -- as of now the peek pin is not connected to anything, but we allow for the possibility of
+    -- using it for something else in the future :)
+    -- (yes there are warning because of it, but we don't want to rewrite the whole test bench again)
+    -- (also if we were to change the implementation of the stack again and need to re-introduce
+    -- the peek pin, we already have a test bench that tests it)
+    -- (also also, maybe there are other stack implementations out there that do have a peek pin, so 
+    -- we obviously planned for our stack to be a drop-in replacement for those, right?)
+    -- (what I'm trying to say is that we're not lazy, we're just future-proofing our design)
+    -- :)
     clk, push, pop, clear, peek : in std_logic;
     din : in std_logic_vector(7 downto 0);
     dout : out std_logic_vector(7 downto 0);
@@ -30,14 +40,14 @@ architecture stack_arch of stack is
     -- 9 bit Address Bus for RAM
     signal addr : std_logic_vector(8 downto 0);
 
-    -- sanitized input signals
+    -- sanitized input signals (validity in current state)
     signal push_en, pop_en : std_logic;
 
     -- internal flags (status bits)
     -- these flags are directly derived from the stack pointer. 
-    -- let's hope the synthesis tool is smart enough to optimize this into
-    -- asynchronous logic.
-    -- introducing a state machine for this would definitely result in additional
+    -- the synthesis tool is smart enough to optimize them out into asynchonous
+    -- logic, which is exactly what we want.
+    -- introducing a "real" state machine for this would definitely result in additional
     -- flip-flops, which would be wasteful.
     signal full_flag : std_logic := '0';
     signal empty_flag : std_logic := '1';
@@ -46,6 +56,7 @@ architecture stack_arch of stack is
     -- we use 9 bits to avoid overflow when incrementing the stack pointer.
     -- at the same time we can use the MSB as a full flag, simplifying the 
     -- logic required to detect a full stack.
+    -- this is the true state of the stack, the flags are just representations.
     signal stack_pointer : integer range 0 to 256 := 0;
 begin
     -- instantiate RAM
@@ -68,16 +79,15 @@ begin
     -- signals are processed on rising edge of clock in the following order:
     -- 1. clear: reset stack pointer to 0
     -- 2. push: increment stack pointer
-    -- 3. pop: decrement stack pointer
+    -- 3. pop: decrement stack pointer and read from stack pointer - 1
     -- 3. peek: read from stack pointer - 1 (parallel to pop)
-    -- **NOTE**: the order of these signals is important, and must match
-    --           the order in which signals are processed in the address
-    --           mux below. Otherwise we could read from the wrong address, 
-    --           or even underflow the stack.
+    -- **NOTE**: the order of these signals is important, and must conform to
+    --           the order of evaluation in the address mux below, such that
+    --           the RAM address is always valid.
     --
     -- **NOTE**: attempts to over or underflow the stack will be ignored.
     --           it's the user's responsibility to check the full/empty flags
-    --           before pushing/popping.
+    --           before pushing/popping/peeking.
     transition: process(clk)
     begin
         if (rising_edge(clk)) then
@@ -96,9 +106,10 @@ begin
     -- process above, as the stack pointer is the only thing that is *actually*
     -- persisted, but these flags are *treated* like the state of the stack.
     -- It's really just a matter of terminology.
-    -- you could probably call these flags the "virtual state" of the stack.
-    -- in any case, these are really just representations of the stack pointer,
-    -- so we update them here.
+    -- these flags are really just representations of the stack pointer,
+    -- so we update them here. there are no registers associated with the flags,
+    -- so they are updated asynchonously (i.e. as soon as the stack pointer changes
+    -- for whatever reason).
     state: process(stack_pointer)
     begin
         -- empty flag is basically just a 9 bit NOR of the stack pointer (== 0)
@@ -120,12 +131,11 @@ begin
     -- otherwise we would have to use a synchronous mux, which would
     -- delay the output by one cycle, and require a *real* state machine.
     -- **NOTE**: we don't need to do any bounds checking here, since
-    --           the stack pointer is always valid when the RAM is enabled.
+    --           the stack pointer is always valid.
     --
-    -- **NOTE**: do not change the order of evaluation here, or you will
-    --           break the stack. Clear/push must be evaluated before pop/peek
-    --           to ensure correct operation when multiple, mutually exclusive
-    --           signals are asserted at the same time.
+    -- **NOTE**: by default we are in peek mode, unless push or clear are
+    --           asserted (clear implies empty_flag = '1', so we don't need
+    --           to check for it explicitly).
     addr_mux: process(stack_pointer, empty_flag, push_en)
     begin
         if (push_en = '1' or empty_flag = '1') then
@@ -135,8 +145,8 @@ begin
         end if;
     end process addr_mux;
 
-    -- output logic, if this even qualifies as logic
-    -- direct forward of internal flags
+    -- output logic (if this even qualifies as logic)
+    -- direct forward of internal flags to output pins
     empty <= empty_flag;
     full <= full_flag;
 end stack_arch;

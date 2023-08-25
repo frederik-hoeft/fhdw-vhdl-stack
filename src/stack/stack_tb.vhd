@@ -27,6 +27,12 @@ architecture test_bench of stack_tb is
     signal clear : std_logic_vector(0 downto 0) := (others => '0');
     signal din : std_logic_vector(7 downto 0) := (others => '0');
 
+    signal delayed_push : std_logic_vector(0 downto 0) := (others => '0');
+    signal delayed_pop : std_logic_vector(0 downto 0) := (others => '0');
+    signal delayed_peek : std_logic_vector(0 downto 0) := (others => '0');
+    signal delayed_clear : std_logic_vector(0 downto 0) := (others => '0');
+    signal delayed_din : std_logic_vector(7 downto 0) := (others => '0');
+
     -- outputs
     signal dout : std_logic_vector(7 downto 0);
     signal full : std_logic_vector(0 downto 0);
@@ -154,6 +160,18 @@ begin
         empty => empty(0)
     );
 
+    -- delayed inputs (to allow for consistent logging)
+    delay_inputs: process(clk)
+    begin
+        if(rising_edge(clk)) then
+            delayed_push <= push;
+            delayed_pop <= pop;
+            delayed_peek <= peek;
+            delayed_clear <= clear;
+            delayed_din <= din;
+        end if;
+    end process delay_inputs;
+
     -- Stimulus process
     STIMULI: process(clk)
         file testpattern: text OPEN READ_MODE is "tb-inputs.txt";
@@ -265,12 +283,11 @@ begin
         -- only log after first clock cycle (allow for device to initialize)
         if(now >= clock_period and not expected_eof) then
             if(rising_edge(clk)) then
-                v_push := std_logic2string(push);
-                v_pop := std_logic2string(pop);
-                v_peek := std_logic2string(peek);
-                v_clear := std_logic2string(clear);
-                v_din := std_logic2string(din);
-                v_push := std_logic2string(push);
+                v_push := std_logic2string(delayed_push);
+                v_pop := std_logic2string(delayed_pop);
+                v_peek := std_logic2string(delayed_peek);
+                v_clear := std_logic2string(delayed_clear);
+                v_din := std_logic2string(delayed_din);
                 v_full := std_logic2string(full);
                 v_empty := std_logic2string(empty);
                 v_dout := std_logic2string(dout);
