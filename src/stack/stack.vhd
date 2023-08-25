@@ -29,7 +29,7 @@ architecture stack_arch of stack is
     signal addr : std_logic_vector(8 downto 0);
 
     -- sanitized input signals
-    signal push_en, pop_en, ram_enable : std_logic;
+    signal push_en, pop_en : std_logic;
 
     -- internal flags (status bits)
     -- these flags are directly derived from the stack pointer. 
@@ -49,8 +49,8 @@ begin
     -- instantiate RAM
     RAMB4_S8_inst : RAMB4_S8 port map(
         we => push_en,
-        en => ram_enable,
-        rst => clear,
+        en => '1',
+        rst => '0',
         clk => clk,
         addr => addr,
         di => din,
@@ -61,16 +61,6 @@ begin
     -- propagation delay of this logic and our address mux.
     push_en <= push and not full_flag;
     pop_en <= pop and not empty_flag;
-
-    -- we want to allow for same-cycle RAM access (signal -> rising edge -> data < 1 cycle), 
-    -- so we just directly forward the user-supplied control signals to the RAM.
-    -- this obviously means that these signals must be stable, but that's
-    -- a valid assumption/requirement for the user of this component
-    -- (it's a synchronous design after all).
-    -- **NOTE**: we don't use the sanitized inputs for the ram_enable signal, since
-    --           the stack pointer is always valid when the RAM is enabled (9 bit),
-    --           and using sanitized signals caused this to be the critical path.
-    ram_enable <= push or pop or peek or clear;
     
     -- "state machine" transitions (synchronous stack pointer manipulation)
     -- signals are processed on rising edge of clock in the following order:
@@ -134,9 +124,9 @@ begin
     --           break the stack. Clear/push must be evaluated before pop/peek
     --           to ensure correct operation when multiple, mutually exclusive
     --           signals are asserted at the same time.
-    addr_mux: process(stack_pointer, clear, push_en)
+    addr_mux: process(stack_pointer, empty_flag, push_en)
     begin
-        if (clear = '1' or push_en = '1') then
+        if (push_en = '1' or empty_flag = '1') then
             addr <= std_logic_vector(to_unsigned(stack_pointer, addr'length));
         else
             addr <= std_logic_vector(to_unsigned(stack_pointer - 1, addr'length));
