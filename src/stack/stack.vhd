@@ -68,10 +68,10 @@ begin
     -- this obviously means that these signals must be stable, but that's
     -- a valid assumption/requirement for the user of this component
     -- (it's a synchronous design after all).
-    -- **NOTE**: we don't really need to sanitize the ram_enable signal, since
+    -- **NOTE**: we don't use the sanitized inputs for the ram_enable signal, since
     --           the stack pointer is always valid when the RAM is enabled (9 bit),
-    --           but we do it anyway for consistency.
-    ram_enable <= push_en or pop_en or peek_en or clear;
+    --           and using sanitized signals caused this to be the critical path.
+    ram_enable <= push or pop or peek or clear;
     
     -- "state machine" transitions (synchronous stack pointer manipulation)
     -- signals are processed on rising edge of clock in the following order:
