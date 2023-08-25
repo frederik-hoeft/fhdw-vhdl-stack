@@ -1,0 +1,436 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 1.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Reading design: stack.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Compilation
+  3) Design Hierarchy Analysis
+  4) HDL Analysis
+  5) HDL Synthesis
+     5.1) HDL Synthesis Report
+  6) Advanced HDL Synthesis
+     6.1) Advanced HDL Synthesis Report
+  7) Low Level Synthesis
+  8) Partition Report
+  9) Final Report
+	9.1) Device utilization summary
+	9.2) Partition Resource Summary
+	9.3) TIMING REPORT
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "stack.prj"
+Input Format                       : mixed
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "stack"
+Output Format                      : NGC
+Target Device                      : xc3s500e-4-vq100
+
+---- Source Options
+Top Module Name                    : stack
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Mux Style                          : Auto
+Decoder Extraction                 : YES
+Priority Encoder Extraction        : Yes
+Shift Register Extraction          : YES
+Logical Shifter Extraction         : YES
+XOR Collapsing                     : YES
+ROM Style                          : Auto
+Mux Extraction                     : Yes
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Multiplier Style                   : Auto
+Automatic Register Balancing       : Yes
+
+---- Target Options
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 24
+Register Duplication               : YES
+Move First FlipFlop Stage          : YES
+Move Last FlipFlop Stage           : YES
+Slice Packing                      : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Yes
+Use Synchronous Set                : Yes
+Use Synchronous Reset              : Yes
+Pack IO Registers into IOBs        : False
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 2
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+Verilog 2001                       : YES
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Compilation                              *
+=========================================================================
+Compiling vhdl file "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.vhd" in Library work.
+Architecture stack_arch of Entity stack is up to date.
+
+=========================================================================
+*                     Design Hierarchy Analysis                         *
+=========================================================================
+Analyzing hierarchy for entity <stack> in library <work> (architecture <stack_arch>).
+
+
+=========================================================================
+*                            HDL Analysis                               *
+=========================================================================
+Analyzing Entity <stack> in library <work> (Architecture <stack_arch>).
+WARNING:Xst:2211 - "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.vhd" line 53: Instantiating black box module <RAMB4_S8>.
+Entity <stack> analyzed. Unit <stack> generated.
+
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+
+Performing bidirectional port resolution...
+
+Synthesizing Unit <stack>.
+    Related source file is "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.vhd".
+    Found 9-bit register for signal <sp>.
+    Found 9-bit adder for signal <sp$add0000> created at line 105.
+    Found 9-bit register for signal <sp_dec>.
+    Found 9-bit subtractor for signal <sp_dec$sub0000> created at line 109.
+    Found 9-bit updown counter for signal <stack_pointer>.
+    Found 9-bit register for signal <vsp>.
+    Found 9-bit register for signal <vsp_dec>.
+    Found 9-bit subtractor for signal <vsp_dec$sub0000> created at line 107.
+    Found 9-bit register for signal <vstack_pointer>.
+    Summary:
+	inferred   1 Counter(s).
+	inferred  45 D-type flip-flop(s).
+	inferred   3 Adder/Subtractor(s).
+Unit <stack> synthesized.
+
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 3
+ 9-bit adder                                           : 1
+ 9-bit subtractor                                      : 2
+# Counters                                             : 1
+ 9-bit updown counter                                  : 1
+# Registers                                            : 5
+ 9-bit register                                        : 5
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Adders/Subtractors                                   : 3
+ 9-bit adder                                           : 1
+ 9-bit subtractor                                      : 2
+# Counters                                             : 1
+ 9-bit updown counter                                  : 1
+# Registers                                            : 45
+ Flip-Flops                                            : 45
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_1> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_1> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_5> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_5> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_0> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_0> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_4> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_4> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_8> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_8> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_3> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_3> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_7> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_7> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_2> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_2> 
+INFO:Xst:2261 - The FF/Latch <vstack_pointer_6> in Unit <stack> is equivalent to the following FF/Latch, which will be removed : <vsp_6> 
+
+Optimizing unit <stack> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block stack, actual ratio is 1.
+
+Pipelining and Register Balancing Report ...
+
+Processing Unit <stack> :
+	Register(s) sp_dec_0 has(ve) been backward balanced into : sp_dec_0_BRB0 sp_dec_0_BRB1 sp_dec_0_BRB2 sp_dec_0_BRB3.
+	Register(s) sp_dec_1 has(ve) been backward balanced into : sp_dec_1_BRB0 sp_dec_1_BRB1 sp_dec_1_BRB2 sp_dec_1_BRB3.
+	Register(s) sp_dec_2 has(ve) been backward balanced into : sp_dec_2_BRB0 sp_dec_2_BRB1 sp_dec_2_BRB2 sp_dec_2_BRB3.
+	Register(s) sp_dec_3 has(ve) been backward balanced into : sp_dec_3_BRB0 sp_dec_3_BRB1 sp_dec_3_BRB2 sp_dec_3_BRB3.
+	Register(s) sp_dec_4 has(ve) been backward balanced into : sp_dec_4_BRB0 sp_dec_4_BRB1 sp_dec_4_BRB2 sp_dec_4_BRB3.
+	Register(s) sp_dec_5 has(ve) been backward balanced into : sp_dec_5_BRB0 sp_dec_5_BRB1 sp_dec_5_BRB2 sp_dec_5_BRB3.
+	Register(s) sp_dec_6 has(ve) been backward balanced into : sp_dec_6_BRB0 sp_dec_6_BRB1 sp_dec_6_BRB2 sp_dec_6_BRB3.
+	Register(s) sp_dec_7 has(ve) been backward balanced into : sp_dec_7_BRB0 sp_dec_7_BRB1 sp_dec_7_BRB2 sp_dec_7_BRB3.
+	Register(s) sp_dec_8 has(ve) been backward balanced into : sp_dec_8_BRB0 sp_dec_8_BRB1 sp_dec_8_BRB2 sp_dec_8_BRB3.
+	Register(s) stack_pointer_8 has(ve) been backward balanced into : stack_pointer_8_BRB0 stack_pointer_8_BRB1 stack_pointer_8_BRB2.
+	Register(s) vsp_dec_1 has(ve) been backward balanced into : vsp_dec_1_BRB2 vsp_dec_1_BRB3.
+	Register(s) vsp_dec_2 has(ve) been backward balanced into : vsp_dec_2_BRB0 vsp_dec_2_BRB1 vsp_dec_2_BRB2 vsp_dec_2_BRB3.
+	Register(s) vsp_dec_3 has(ve) been backward balanced into : vsp_dec_3_BRB2 vsp_dec_3_BRB3.
+	Register(s) vsp_dec_4 has(ve) been backward balanced into : vsp_dec_4_BRB2 vsp_dec_4_BRB3.
+	Register(s) vsp_dec_5 has(ve) been backward balanced into : vsp_dec_5_BRB2 vsp_dec_5_BRB3.
+	Register(s) vsp_dec_6 has(ve) been backward balanced into : vsp_dec_6_BRB2 vsp_dec_6_BRB3.
+	Register(s) vsp_dec_7 has(ve) been backward balanced into : vsp_dec_7_BRB2 vsp_dec_7_BRB3.
+	Register(s) vsp_dec_8 has(ve) been backward balanced into : vsp_dec_8_BRB2 vsp_dec_8_BRB3.
+Unit <stack> processed.
+FlipFlop sp_8 has been replicated 1 time(s)
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 85
+ Flip-Flops                                            : 85
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Final Report                               *
+=========================================================================
+Final Results
+RTL Top Level Output File Name     : stack.ngr
+Top Level Output File Name         : stack
+Output Format                      : NGC
+Optimization Goal                  : Speed
+Keep Hierarchy                     : No
+
+Design Statistics
+# IOs                              : 23
+
+Cell Usage :
+# BELS                             : 187
+#      GND                         : 1
+#      INV                         : 16
+#      LUT1                        : 10
+#      LUT2                        : 3
+#      LUT3                        : 27
+#      LUT4                        : 51
+#      LUT4_L                      : 10
+#      MUXCY                       : 32
+#      VCC                         : 1
+#      XORCY                       : 36
+# FlipFlops/Latches                : 85
+#      FD                          : 11
+#      FDE                         : 9
+#      FDR                         : 29
+#      FDRE                        : 18
+#      FDRS                        : 8
+#      FDS                         : 9
+#      FDSE                        : 1
+# RAMS                             : 1
+#      RAMB4_S8                    : 1
+# Clock Buffers                    : 1
+#      BUFGP                       : 1
+# IO Buffers                       : 22
+#      IBUF                        : 12
+#      OBUF                        : 10
+=========================================================================
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 3s500evq100-4 
+
+ Number of Slices:                       78  out of   4656     1%  
+ Number of Slice Flip Flops:             85  out of   9312     0%  
+ Number of 4 input LUTs:                117  out of   9312     1%  
+ Number of IOs:                          23
+ Number of bonded IOBs:                  23  out of     66    34%  
+ Number of BRAMs:                         1  out of     20     5%  
+ Number of GCLKs:                         1  out of     24     4%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+TIMING REPORT
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+clk                                | BUFGP                  | 86    |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -4
+
+   Minimum period: 7.067ns (Maximum Frequency: 141.493MHz)
+   Minimum input arrival time before clock: 6.538ns
+   Maximum output required time after clock: 7.321ns
+   Maximum combinational path delay: No path found
+
+Timing Detail:
+--------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'clk'
+  Clock period: 7.067ns (frequency: 141.493MHz)
+  Total number of paths / destination ports: 1426 / 145
+-------------------------------------------------------------------------
+Delay:               7.067ns (Levels of Logic = 4)
+  Source:            sp_8_1 (FF)
+  Destination:       stack_pointer_0 (FF)
+  Source Clock:      clk rising
+  Destination Clock: clk rising
+
+  Data Path: sp_8_1 to stack_pointer_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              1   0.591   0.595  sp_8_1 (sp_8_1)
+     LUT3:I0->O            1   0.704   0.455  empty_flag_cmp_eq00008 (empty_flag_cmp_eq00008)
+     LUT4:I2->O           14   0.704   1.004  empty_flag_cmp_eq000034 (empty_OBUF)
+     LUT4:I3->O           36   0.704   1.298  stack_pointer_not00011_1 (stack_pointer_not00011)
+     LUT3:I2->O            1   0.704   0.000  Mcount_stack_pointer_eqn_01 (Mcount_stack_pointer_eqn_0)
+     FDR:D                     0.308          stack_pointer_0
+    ----------------------------------------
+    Total                      7.067ns (3.715ns logic, 3.352ns route)
+                                       (52.6% logic, 47.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clk'
+  Total number of paths / destination ports: 283 / 171
+-------------------------------------------------------------------------
+Offset:              6.538ns (Levels of Logic = 11)
+  Source:            push (PAD)
+  Destination:       stack_pointer_7 (FF)
+  Destination Clock: clk rising
+
+  Data Path: push to stack_pointer_7
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O            43   1.218   1.441  push_IBUF (push_IBUF)
+     LUT2:I0->O            2   0.704   0.447  push_en_inv2 (push_en_inv)
+     MUXCY:CI->O           1   0.059   0.000  Mcount_stack_pointer_cy<0> (Mcount_stack_pointer_cy<0>)
+     MUXCY:CI->O           1   0.059   0.000  Mcount_stack_pointer_cy<1> (Mcount_stack_pointer_cy<1>)
+     MUXCY:CI->O           1   0.059   0.000  Mcount_stack_pointer_cy<2> (Mcount_stack_pointer_cy<2>)
+     MUXCY:CI->O           1   0.059   0.000  Mcount_stack_pointer_cy<3> (Mcount_stack_pointer_cy<3>)
+     MUXCY:CI->O           1   0.059   0.000  Mcount_stack_pointer_cy<4> (Mcount_stack_pointer_cy<4>)
+     MUXCY:CI->O           1   0.059   0.000  Mcount_stack_pointer_cy<5> (Mcount_stack_pointer_cy<5>)
+     MUXCY:CI->O           1   0.059   0.000  Mcount_stack_pointer_cy<6> (Mcount_stack_pointer_cy<6>)
+     XORCY:CI->O           1   0.804   0.499  Mcount_stack_pointer_xor<7> (Result<7>)
+     LUT3:I1->O            1   0.704   0.000  Mcount_stack_pointer_eqn_71 (Mcount_stack_pointer_eqn_7)
+     FDR:D                     0.308          stack_pointer_7
+    ----------------------------------------
+    Total                      6.538ns (4.151ns logic, 2.387ns route)
+                                       (63.5% logic, 36.5% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clk'
+  Total number of paths / destination ports: 18 / 10
+-------------------------------------------------------------------------
+Offset:              7.321ns (Levels of Logic = 3)
+  Source:            sp_8_1 (FF)
+  Destination:       empty (PAD)
+  Source Clock:      clk rising
+
+  Data Path: sp_8_1 to empty
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDR:C->Q              1   0.591   0.595  sp_8_1 (sp_8_1)
+     LUT3:I0->O            1   0.704   0.455  empty_flag_cmp_eq00008 (empty_flag_cmp_eq00008)
+     LUT4:I2->O           14   0.704   1.000  empty_flag_cmp_eq000034 (empty_OBUF)
+     OBUF:I->O                 3.272          empty_OBUF (empty)
+    ----------------------------------------
+    Total                      7.321ns (5.271ns logic, 2.050ns route)
+                                       (72.0% logic, 28.0% route)
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.02 secs
+ 
+--> 
+
+
+Total memory usage is 512816 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
+Number of infos    :    9 (   0 filtered)
+

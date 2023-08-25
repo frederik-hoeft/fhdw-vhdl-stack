@@ -1,0 +1,37 @@
+//! **************************************************************************
+// Written by: Map P.20131013 on Fri Aug 25 20:40:06 2023
+//! **************************************************************************
+
+SCHEMATIC START;
+NET "clk_BUFGP/IBUFG" BEL "clk_BUFGP/BUFG.GCLKMUX" USELOCALCONNECT;
+TIMEGRP clk = BEL "vsp_dec_0" BEL "sp_0" BEL "sp_1" BEL "sp_2" BEL "sp_3" BEL
+        "sp_4" BEL "sp_5" BEL "sp_6" BEL "sp_7" BEL "sp_8" BEL
+        "vstack_pointer_0" BEL "vstack_pointer_1" BEL "vstack_pointer_2" BEL
+        "vstack_pointer_3" BEL "vstack_pointer_4" BEL "vstack_pointer_5" BEL
+        "vstack_pointer_6" BEL "vstack_pointer_7" BEL "vstack_pointer_8" BEL
+        "stack_pointer_0" BEL "stack_pointer_1" BEL "stack_pointer_2" BEL
+        "stack_pointer_3" BEL "stack_pointer_4" BEL "stack_pointer_5" BEL
+        "stack_pointer_6" BEL "stack_pointer_7" BEL "sp_dec_0_BRB0" BEL
+        "sp_dec_0_BRB1" BEL "sp_dec_0_BRB2" BEL "sp_dec_0_BRB3" BEL
+        "vsp_dec_2_BRB0" BEL "vsp_dec_2_BRB1" BEL "vsp_dec_2_BRB2" BEL
+        "vsp_dec_2_BRB3" BEL "vsp_dec_3_BRB2" BEL "vsp_dec_3_BRB3" BEL
+        "vsp_dec_4_BRB2" BEL "vsp_dec_4_BRB3" BEL "vsp_dec_5_BRB2" BEL
+        "vsp_dec_5_BRB3" BEL "vsp_dec_6_BRB2" BEL "vsp_dec_6_BRB3" BEL
+        "vsp_dec_7_BRB2" BEL "vsp_dec_7_BRB3" BEL "vsp_dec_8_BRB2" BEL
+        "vsp_dec_8_BRB3" BEL "sp_dec_2_BRB0" BEL "sp_dec_2_BRB1" BEL
+        "sp_dec_2_BRB2" BEL "sp_dec_2_BRB3" BEL "sp_dec_3_BRB0" BEL
+        "sp_dec_3_BRB1" BEL "sp_dec_3_BRB2" BEL "sp_dec_3_BRB3" BEL
+        "sp_dec_4_BRB0" BEL "sp_dec_4_BRB1" BEL "sp_dec_4_BRB2" BEL
+        "sp_dec_4_BRB3" BEL "sp_dec_5_BRB0" BEL "sp_dec_5_BRB1" BEL
+        "sp_dec_5_BRB2" BEL "sp_dec_5_BRB3" BEL "sp_dec_6_BRB0" BEL
+        "sp_dec_6_BRB1" BEL "sp_dec_6_BRB2" BEL "sp_dec_6_BRB3" BEL
+        "sp_dec_7_BRB0" BEL "sp_dec_7_BRB1" BEL "sp_dec_7_BRB2" BEL
+        "sp_dec_7_BRB3" BEL "sp_dec_8_BRB0" BEL "sp_dec_8_BRB1" BEL
+        "sp_dec_8_BRB2" BEL "sp_dec_8_BRB3" BEL "stack_pointer_8_BRB0" BEL
+        "stack_pointer_8_BRB1" BEL "stack_pointer_8_BRB2" BEL "vsp_dec_1_BRB2"
+        BEL "vsp_dec_1_BRB3" BEL "sp_dec_1_BRB0" BEL "sp_dec_1_BRB1" BEL
+        "sp_dec_1_BRB2" BEL "sp_dec_1_BRB3" BEL "sp_8_1" BEL
+        "clk_BUFGP/BUFG.GCLKMUX" BEL "clk_BUFGP/BUFG" BEL "RAMB4_S8_inst.A";
+TS_CLK = PERIOD TIMEGRP "clk" 6.4 ns HIGH 50%;
+SCHEMATIC END;
+

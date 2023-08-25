@@ -1,0 +1,9 @@
+xst -intstyle ise -ifn "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.xst" -ofn "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.syr" 
+xst -intstyle ise -ifn "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.xst" -ofn "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc stack.ucf -p xc3s500e-vq100-4 stack.ngc stack.ngd  
+xst -intstyle ise -ifn "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.xst" -ofn "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc stack.ucf -p xc3s500e-vq100-4 stack.ngc stack.ngd  
+map -intstyle ise -p xc3s500e-vq100-4 -timing -logic_opt on -ol high -xe n -t 1 -register_duplication on -cm area -ir off -pr off -power off -o stack_map.ncd stack.ngd stack.pcf 
+par -w -intstyle ise -pl high -rl high -xe n -t 1 stack_map.ncd stack.ncd stack.pcf 
+trce -intstyle ise -v 3 -s 4 -n 3 -fastpaths -xml stack.twx stack.ncd -o stack.twr stack.pcf -ucf stack.ucf 
+bitgen -intstyle ise -f stack.ut stack.ncd 

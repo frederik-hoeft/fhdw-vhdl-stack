@@ -1,0 +1,38 @@
+Release 14.7 ngdbuild P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+
+Command Line:
+/home/dev/software/xilinx/installation/14.7/ISE_DS/ISE/bin/lin64/unwrapped/ngdbu
+ild -intstyle ise -dd _ngo -nt timestamp -uc stack.ucf -p xc3s500e-vq100-4
+stack.ngc stack.ngd
+
+Reading NGO file "/home/dev/projects/es4/fhdw-vhdl-stack/src/stack/stack.ngc"
+...
+Gathering constraint information from source properties...
+Done.
+
+Annotating constraints to design from ucf file "stack.ucf" ...
+Resolving constraint associations...
+Checking Constraint Associations...
+Done...
+
+Checking expanded design ...
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+NGDBUILD Design Results Summary:
+  Number of errors:     0
+  Number of warnings:   0
+
+Total memory usage is 379000 kilobytes
+
+Writing NGD file "stack.ngd" ...
+Total REAL time to NGDBUILD completion:  1 sec
+Total CPU time to NGDBUILD completion:   1 sec
+
+Writing NGDBUILD log file "stack.bld"...
