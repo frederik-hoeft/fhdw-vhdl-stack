@@ -161,6 +161,7 @@ begin
     );
 
     -- delayed inputs (to allow for consistent logging)
+    -- this compensates for the input - output delay
     delay_inputs: process(clk)
     begin
         if(rising_edge(clk)) then
@@ -277,11 +278,13 @@ begin
             is_first_monitor_call <= false;
             write(var_line, "<STATUS> at <TIME> (@");
             write(var_line, clock_period);
-            write(var_line, "),,push,pop,peek,clear,din,,full(e:a),empty(e:a),dout(e:a)");
+            write(var_line, "),,push,pop,peek,clear,din,,full(exp:act),empty(exp:act),dout(exp:act)");
             writeline(protocol, var_line);
         end if;
-        -- only log after first clock cycle (allow for device to initialize)
-        if(now >= clock_period and not expected_eof) then
+        -- only log after first two clock cycles (one to allow for device to initialize
+        -- and the other one because input to output takes a cycle, so there won't be valid
+        -- data immediately)
+        if(now >= 2 * clock_period and not expected_eof) then
             if(rising_edge(clk)) then
                 v_push := std_logic2string(delayed_push);
                 v_pop := std_logic2string(delayed_pop);
