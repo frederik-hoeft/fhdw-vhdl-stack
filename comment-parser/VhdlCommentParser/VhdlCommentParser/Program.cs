@@ -78,7 +78,7 @@ for (int i = 2; i < lines.Length; i++)
     }
 
     string processedExpectedWords = string.Join(' ', expected);
-    for (int j = 0; i == 1 &&
+    for (int j = 0; i == 2 &&
 #if METASTABILITY
         j < 3;
 #else
