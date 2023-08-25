@@ -2,6 +2,8 @@ format,,,,,F::base_10:8,,,,F::base_10:8
 pins,push,pop,peek,clear,data_in,,full,empty,data_out
 clear,0,0,0,1,X,,0,1,X
 clear,0,0,0,1,X,,0,1,X
+push 0,1,0,0,0,0,,0,0,X
+verify push,0,0,1,0,X,,0,0,0
 push 1,1,0,0,0,1,,0,0,X
 verify push,0,0,1,0,X,,0,0,1
 push 2,1,0,0,0,2,,0,0,X
@@ -508,6 +510,8 @@ push 252,1,0,0,0,252,,0,0,X
 verify push,0,0,1,0,X,,0,0,252
 push 253,1,0,0,0,253,,0,0,X
 verify push,0,0,1,0,X,,0,0,253
+push 254,1,0,0,0,254,,0,0,X
+verify push,0,0,1,0,X,,0,0,254
 push 255,1,0,0,0,255,,1,0,X
 verify push,0,0,1,0,X,,1,0,255
 verify full,0,0,0,0,X,,1,0,X

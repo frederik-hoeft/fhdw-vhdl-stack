@@ -11,11 +11,11 @@ pins_row = [
 clear_row1 = ["clear", "0", "0", "0", "1", "X", "", "0", "1", "X"]
 clear_row2 = ["clear", "0", "0", "0", "1", "X", "", "0", "1", "X"]
 
-# Initialize the test vector list (same as before)
+# Initialize the test vector list
 test_vectors = [header, pins_row, clear_row1, clear_row2]
 
-# Generate the push and verify push test vectors (same as before)
-for i in range(1, 254):
+# Generate the push and verify push test vectors
+for i in range(0, 255):
     push_row = ["push " + str(i), "1", "0", "0", "0", str(i), "", "0", "0", "X"]
     verify_push_row = ["verify push", "0", "0", "1", "0", "X", "", "0", "0", str(i)]
     
@@ -31,8 +31,8 @@ test_vectors.append(["attempt overflow", "1","0","0","0","32","","1","0","X"])
 test_vectors.append(["verify didn't push", "0","0","1","0","X","","1","0","255"])
 
 # Simulate popping and verifying the top 100 most entries
-for i in range(1, 101):
-    pop_row = ["pop " + str(255 - i + 1), "0", "1", "0", "0", "X", "", "0", "0", str(255 - i + 1)]
+for i in range(0, 100):
+    pop_row = ["pop " + str(255 - i), "0", "1", "0", "0", "X", "", "0", "0", str(255 - i)]
     test_vectors.append(pop_row)
 
 # clear stack
