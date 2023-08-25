@@ -29,7 +29,7 @@ architecture stack_arch of stack is
     signal addr : std_logic_vector(8 downto 0);
 
     -- sanitized input signals
-    signal push_en, pop_en, peek_en, ram_enable : std_logic;
+    signal push_en, pop_en, ram_enable : std_logic;
 
     -- internal flags (status bits)
     -- these flags are directly derived from the stack pointer. 
@@ -61,7 +61,6 @@ begin
     -- propagation delay of this logic and our address mux.
     push_en <= push and not full_flag;
     pop_en <= pop and not empty_flag;
-    peek_en <= peek and not empty_flag;
 
     -- we want to allow for same-cycle RAM access (signal -> rising edge -> data < 1 cycle), 
     -- so we just directly forward the user-supplied control signals to the RAM.
