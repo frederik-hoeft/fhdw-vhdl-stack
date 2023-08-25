@@ -1,6 +1,6 @@
 import csv
 
-# Define the header and initial rows (same as before)
+# Define the header and initial rows
 header = [
     "format", "", "", "", "", "F::base_10:8", "",
     "", "", "F::base_10:8"
