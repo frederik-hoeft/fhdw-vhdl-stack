@@ -1,6 +1,25 @@
 # VHDL Stack
 Dieses Dokument dient als Übersicht der erbrachten Leistungen innerhalb des zweiten VHDL-Projektes.
 
+## Beschreibung des Stacks
+Es wurde ein Stack in VHDL implementiert, welcher 512x8 Bit abspeichern kann. Es ist möglich Daten auf den Stack zu pushen, von dem Stack zu poppen, oder den zuletzt gepushten Wert auszulesen. Außerdem kann der Inhalt des Stacks zurückgesetzt werden. Wenn der Stack leer oder vollgeschrieben ist, wird das entsprechende Output Flag gesetzt. Der Benutzer des Stacks muss selbst sicherstellen, dass er, wenn der Stack leer ist, nicht mehr die pop-Operation ausführt und, wenn der Stack voll ist, nicht mehr die push-Operation ausführt. Tut er das nicht, underflowed oder overflowed der Stack.
+
+Die zur Verfügung stehenden Ports sind in der folgenden Tabelle abgebildet. Alle Pins sind high-aktiv.
+
+| Typ | Name | Beschreibung | Wortbreite |
+|-|-|-|-|-|
+| In | clk | Clock | 1 |
+| In | push | Push Operation | 1 |
+| In | pop | Pop Operation | 1 |
+| In | clear | Clear Operation | 1 |
+| In | peek | Peek Operation | 1 |
+| In | din | Data In | 8 |
+| Out | dout | Data Out | 8 |
+| Out | full | Full Flag | 1 |
+| Out | empty | Empty Flag | 1 |
+
+Eine detaillierte Beschreibung der Umsetzung inklusive Besonderheiten und Blockschaltbild befindet sich in dem [Datenblatt](Datenblatt.md).
+
 ## Angepasster Test-Preprocessor
 
 Das im ersten VHDL Projekt erstellte C\#/.NET Programm, welches zur vereinfachten Erstellung von Testvektoren gedient hat, wurde nun erweitert und erneut genutzt. Die bestehende Implementierung sorgt dafür, dass Testvektoren zusammen mit Kommentaren in einer CSV Datei festgehalten werden können und die Input- und Output-Daten dann durch das Programm in separate TXT Dateien kopiert werden. Jegliche Kommentare (definiert durch die Position in der Datei) werden bei dem Kopiervorgang ignoriert. Somit kann die Übersichtlichkeit beim Schreiben der Testdaten gewährleistet werden.
@@ -89,3 +108,7 @@ Die generierten Dateien passend zu Beispiel **(1)** sehen wie folgt aus:
 0 0 00001010
 ```
 
+## Implementierung der Testbench
+Die für das letzte Projekt genutzte Testbench wurde nun so erweitert, dass sie auch die neuen Input- und Output-Pins auswerten kann. Außerdem wurde die Generation einer ausführlichen Log-Datei im CSV-Format dem Testvorgang hinzugefügt, welche den Status des Tests, zusammen mit den getesteten Daten aufführt. Dies bietet einen deutlich detaillierteren Output im Gegensatz zu der Basisimplementierung und sorgt vor allem dafür, dass Fehler in der Implementation schneller beseitigt werden konnten.
+
+- TODO: vielleicht noch ein Bild von dem Dateiinhalt?

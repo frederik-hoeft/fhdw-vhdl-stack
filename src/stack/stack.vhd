@@ -45,7 +45,7 @@ architecture stack_arch of stack is
 
     -- internal flags (status bits)
     -- these flags are directly derived from the stack pointer. 
-    -- the synthesis tool is smart enough to optimize them out into asynchonous
+    -- the synthesis tool is smart enough to optimize them out into asynchronous
     -- logic, which is exactly what we want.
     -- introducing a "real" state machine for this would definitely result in additional
     -- flip-flops, which would be wasteful.
@@ -69,7 +69,7 @@ begin
         di => din,
         do => dout);
 
-    -- sanitize input signals asynchonously
+    -- sanitize input signals asynchronously
     -- we require a small additional setup time to take into account the
     -- propagation delay of this logic and our address mux.
     push_en <= push and not full_flag;
@@ -108,7 +108,7 @@ begin
     -- It's really just a matter of terminology.
     -- these flags are really just representations of the stack pointer,
     -- so we update them here. there are no registers associated with the flags,
-    -- so they are updated asynchonously (i.e. as soon as the stack pointer changes
+    -- so they are updated asynchronously (i.e. as soon as the stack pointer changes
     -- for whatever reason).
     state: process(stack_pointer)
     begin
