@@ -6,7 +6,7 @@ Dieses Dokument liefert eine kurze technische Übersicht des VHDL Stacks.
 
 ### Eigenschaften
 
-Der Stack arbeitet mit einer internen, verwendbaren Adressbreite von 8 Bit. Dies entspricht einer maximalen Stackgröße von 256 Elementen. Die Wortbreite der Datenwörter beträgt ebenso 8 Bit. Die maximale Taktfrequenz wurde mit Xilinx ISE für Xilinx Spartan-3E (XC3S500E-VQ100) FPGAs durch Post-Route-Timing Analysen ermittelt und liegt für den Stack bei 155.72 MHz, bzw 6.422 ns pro Taktzyklus. 
+Der Stack arbeitet mit einer internen, verwendbaren Adressbreite von 8 Bit. Dies entspricht einer maximalen Stackgröße von 256 Elementen. Die Wortbreite der Datenwörter beträgt ebenso 8 Bit. Die maximale Taktfrequenz wurde mit Xilinx ISE für Xilinx Spartan-3E (XC3S500E-VQ100) FPGAs durch Post-Route-Timing Analysen ermittelt und liegt für den Stack bei 155.715 MHz, bzw 6.422 ns pro Taktzyklus. 
 - Power Analyse
 
 ## Portübersicht

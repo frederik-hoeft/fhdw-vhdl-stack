@@ -2,7 +2,7 @@
 Dieses Dokument dient als Übersicht der erbrachten Leistungen innerhalb des zweiten VHDL-Projektes.
 
 ## Beschreibung des Stacks
-Es wurde ein Stack in VHDL implementiert, welcher 512x8 Bit abspeichern kann. Es ist möglich Daten auf den Stack zu pushen, von dem Stack zu poppen, oder den zuletzt gepushten Wert auszulesen. Außerdem kann der Inhalt des Stacks zurückgesetzt werden. Wenn der Stack leer oder vollgeschrieben ist, wird das entsprechende Output Flag gesetzt. Der Benutzer des Stacks muss selbst sicherstellen, dass er, wenn der Stack leer ist, nicht mehr die pop-Operation ausführt und, wenn der Stack voll ist, nicht mehr die push-Operation ausführt. Tut er das nicht, underflowed oder overflowed der Stack.
+Es wurde ein Stack in VHDL implementiert, welcher 512x8 Bit abspeichern kann. Es ist möglich Daten auf den Stack zu pushen, von dem Stack zu poppen, oder den zuletzt gepushten Wert auszulesen. Außerdem kann der Inhalt des Stacks zurückgesetzt werden. Wenn der Stack leer oder vollgeschrieben ist, wird das entsprechende Output Flag gesetzt. Der Benutzer des Stacks muss selbst sicherstellen, dass er, wenn der Stack leer ist, nicht mehr die pop-Operation ausführt und, wenn der Stack voll ist, nicht mehr die push-Operation ausführt. Versucht er es dennoch, werden die Operationen ignoriert.
 
 Die zur Verfügung stehenden Ports sind in der folgenden Tabelle abgebildet. Alle Pins sind high-aktiv.
 
@@ -111,4 +111,5 @@ Die generierten Dateien passend zu Beispiel **(1)** sehen wie folgt aus:
 ## Implementierung der Testbench
 Die für das letzte Projekt genutzte Testbench wurde nun so erweitert, dass sie auch die neuen Input- und Output-Pins auswerten kann. Außerdem wurde die Generation einer ausführlichen Log-Datei im CSV-Format dem Testvorgang hinzugefügt, welche den Status des Tests, zusammen mit den getesteten Daten aufführt. Dies bietet einen deutlich detaillierteren Output im Gegensatz zu der Basisimplementierung und sorgt vor allem dafür, dass Fehler in der Implementation schneller beseitigt werden konnten.
 
-- TODO: vielleicht noch ein Bild von dem Dateiinhalt?
+Die generierte Log-Datei passend zu Beispiel **(1)** sieht wie folgt aus:
+![](./assets/images/example-log-file.png)
