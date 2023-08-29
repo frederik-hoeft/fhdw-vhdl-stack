@@ -1,8 +1,10 @@
 # VHDL Stack
+
 Dieses Dokument dient als Übersicht der erbrachten Leistungen innerhalb des zweiten VHDL-Projektes.
 
 ## Beschreibung des Stacks
-Es wurde ein Stack in VHDL implementiert, welcher 512x8 Bit abspeichern kann. Es ist möglich Daten auf den Stack zu pushen, von dem Stack zu poppen, oder den zuletzt gepushten Wert auszulesen. Außerdem kann der Inhalt des Stacks zurückgesetzt werden. Wenn der Stack leer oder vollgeschrieben ist, wird das entsprechende Output Flag gesetzt. Der Benutzer des Stacks muss selbst sicherstellen, dass er, wenn der Stack leer ist, nicht mehr die pop-Operation ausführt und, wenn der Stack voll ist, nicht mehr die push-Operation ausführt. Versucht er es dennoch, werden die Operationen ignoriert.
+
+Es wurde ein Stack in VHDL implementiert, welcher 256x8 Bit abspeichern kann. Es ist möglich Daten auf den Stack zu pushen, von dem Stack zu poppen, oder den zuletzt gepushten Wert auszulesen (peek). Außerdem kann der Inhalt des Stacks zurückgesetzt werden. Wenn der Stack leer oder vollgeschrieben ist, wird das entsprechende Output Flag gesetzt. Der Benutzer des Stacks muss selbst sicherstellen, dass er, wenn der Stack leer ist, nicht mehr die pop-Operation ausführt und, wenn der Stack voll ist, nicht mehr die push-Operation ausführt. Versucht er es dennoch, werden die Operationen ignoriert.
 
 Die zur Verfügung stehenden Ports sind in der folgenden Tabelle abgebildet. Alle Pins sind high-aktiv.
 
@@ -19,6 +21,12 @@ Die zur Verfügung stehenden Ports sind in der folgenden Tabelle abgebildet. All
 | Out | empty | Empty Flag | 1 |
 
 Eine detaillierte Beschreibung der Umsetzung inklusive Besonderheiten und Blockschaltbild befindet sich in dem [Datenblatt](Datenblatt.md).
+
+### Implementierungsdetails / Besonderheiten
+
+Dies ist eine Implementierung eines 256x8-Bit-Stapels in VHDL. Der Stack wird durch einen 512x8-Bit-Single-Point-Block SelectRAM realisiert. Der Stack hat einen 9-Bit-Adressbus, der den RAM adressiert. Der Stack hat auch einen 9-Bit-Stack-Pointer, der auf die nächste freie Adresse zeigt. Der MSB des Stack-Pointers wird als voller Flag verwendet, um zu signalisieren, dass der Stack voll ist. Der Stack hat auch ein leeres Flag, das gesetzt wird, wenn der Stack-Pointer 0 ist. Der Stack hat vier Eingänge: push, pop, clear und din. Der push-Eingang erhöht den Stack-Pointer um 1, der pop-Eingang verringert den Stack-Pointer um 1 und liest den Wert an der Adresse des alten Stack-Pointers. Der clear-Eingang setzt den Stack-Pointer auf 0. Der din-Eingang schreibt den Wert in den RAM an der Adresse des aktuellen Stack-Pointers. Der Stack hat auch einen Ausgang: dout, der den Wert an der Adresse des alten Stack-Pointers ausgibt. Der Stack hat auch zwei Ausgänge: full und empty, die anzeigen, ob der Stack voll oder leer ist. Der Stack hat auch einen peek-Eingang, der nicht mehr verwendet wird, aber für Abwärtskompatibilität mit dem Testbench vorhanden ist. Der Stack hat auch ein internes Flagsystem, das direkt aus dem Stack-Pointer abgeleitet wird. Das Flagsystem besteht aus einem vollen Flag und einem leeren Flag. Das Flagsystem wird asynchron aktualisiert, um die Anzahl der Flip-Flops zu minimieren. Der Stack hat auch eine Adress-Multiplexer-Logik, die asynchron ist, um den RAM-Zugriff im selben Zyklus zu ermöglichen. Der Multiplexer verwendet push_en und empty_flag als Steuersignale, um zu entscheiden, welche Adresse an den RAM gesendet wird. Der Stack hat auch eine "state machine" -Logik, die den Stack-Pointer manipuliert. Die "state machine" wird synchronisiert, um die Konsistenz der Flags zu gewährleisten. Der Stack hat auch eine Ausgabe-Logik, die die Flags direkt an die Ausgangspins weiterleitet.
+
+Es gibt einige Besonderheiten dieser Implementierung, die beachtet werden sollten. Zunächst wird der peek-Eingang nicht mehr verwendet und ist nur für Abwärtskompatibilität mit dem Testbench vorhanden. Zweitens wird das Flagsystem asynchron aktualisiert, um die Anzahl der Flip-Flops zu minimieren. Drittens wird der Adress-Multiplexer asynchron gesteuert, um den RAM-Zugriff im selben Zyklus zu ermöglichen. Viertens wird der Stack-Pointer als 9-Bit-Integer implementiert, um Überläufe beim Inkrementieren des Stack-Pointers zu vermeiden. Schließlich wird der Stack so implementiert, dass er die Flags als direkte Repräsentationen des Stack-Pointers verwendet, um zusätzliche Flip-Flops zu vermeiden.
 
 ## Angepasster Test-Preprocessor
 
@@ -109,7 +117,7 @@ Die generierten Dateien passend zu Beispiel **(1)** sehen wie folgt aus:
 ```
 
 ## Implementierung der Testbench
-Die für das letzte Projekt genutzte Testbench wurde nun so erweitert, dass sie auch die neuen Input- und Output-Pins auswerten kann. Außerdem wurde die Generation einer ausführlichen Log-Datei im CSV-Format dem Testvorgang hinzugefügt, welche den Status des Tests, zusammen mit den getesteten Daten aufführt. Dies bietet einen deutlich detaillierteren Output im Gegensatz zu der Basisimplementierung und sorgt vor allem dafür, dass Fehler in der Implementation schneller beseitigt werden konnten.
+Die für das letzte Projekt genutzte Testbench wurde nun so erweitert, dass sie auch die neuen Input- und Output-Pins auswerten kann. Außerdem wurde die Generation einer ausführlichen Log-Datei im CSV-Format dem Testvorgang hinzugefügt, welche den Status des Tests, zusammen mit den getesteten Daten aufführt. Dies bietet einen deutlich detaillierteren Output im Gegensatz zu der Basisimplementierung und sorgt vor allem dafür, dass Fehler in der Implementation schneller beseitigt werden konnten. Zudem wird die CSV Tabelle so formatiert, dass der Input und Output/Expected-Wert der Testvektoren direkt nebeneinander steht (der delay wird also automatisch ausgeglichen), was die Übersichtlichkeit der Testergebnisse deutlich erhöht.
 
 Die generierte Log-Datei passend zu Beispiel **(1)** sieht wie folgt aus:
 ![](./assets/images/example-log-file.png)

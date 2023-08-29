@@ -1,15 +1,15 @@
 # Datenblatt
+
 Dieses Dokument liefert eine kurze technische Übersicht des VHDL Stacks.
 
-## Besonderheiten
-- alle kommentare überschauen und evtl dokumentieren 
+## Eigenschaften
 
-### Eigenschaften
-
-Der Stack arbeitet mit einer internen, verwendbaren Adressbreite von 8 Bit. Dies entspricht einer maximalen Stackgröße von 256 Elementen. Die Wortbreite der Datenwörter beträgt ebenso 8 Bit. Die maximale Taktfrequenz wurde mit Xilinx ISE für Xilinx Spartan-3E (XC3S500E-VQ100) FPGAs durch Post-Route-Timing Analysen ermittelt und liegt für den Stack bei 155.715 MHz, bzw 6.422 ns pro Taktzyklus. 
-- Power Analyse
+Der Stack arbeitet mit einer internen, verwendbaren Adressbreite von 8 Bit. Dies entspricht einer maximalen Stackgröße von 256 Elementen. Die Wortbreite der Datenwörter beträgt ebenso 8 Bit. Die maximale Taktfrequenz wurde mit Xilinx ISE für Xilinx Spartan-3E (XC3S500E-VQ100) FPGAs durch Post-Route-Timing Analysen ermittelt und liegt für den Stack bei 155.715 MHz, bzw 6.422 ns pro Taktzyklus. Der erwartete gesamt-Stromverbraucht beträgt 105.20 mW. Weitere Informationen zur Leistungsaufnahme sind in der Tabelle "Power Consumption" zu finden.
 
 ## Portübersicht
+
+<img style="width: 40%" src="./assets/images/block.png"/>
+
 Die zur Verfügung stehenden Ports sind in der folgenden Tabelle abgebildet. Alle Pins sind high-aktiv.
 
 | Typ | Name | Beschreibung | Wortbreite |
@@ -41,5 +41,14 @@ Je nach Kombination der Steuersignale wird eine bestimmte Operation ausgeführt.
 | 0 | 1 | 0 | - | Pop Operation, falls Stack nicht leer, sonst NOP |
 | 1 | - | 0 | - | Push Operation, falls Stack nicht voll, sonst NOP |
 
+## Power Consumption
 
-- blockschaltbild
+|        On-Chip        | Power (mW) |  Used  | Available | Utilization (%) |
+|-----------------------|------------|--------|-----------|-----------------|
+| Clocks                |       2.82 |      1 |    ---    |       ---       |
+| Logic                 |       0.51 |     33 |      9312 |               0 |
+| Signals               |       0.74 |     60 |    ---    |       ---       |
+| IOs                   |      18.63 |     22 |        66 |              33 |
+| BRAMs                 |       0.52 |      1 |        20 |               5 |
+| Static Power          |      81.99 |        |           |                 |
+| Total                 |     105.20 |        |           |                 |
