@@ -1,5 +1,9 @@
 # VHDL Stack
 
+_Gruppe: Ben Bekir Ertugrul, Frederik Höft, Manuele Waldheim und Henri Betz_
+
+---
+
 Dieses Dokument dient als Übersicht der erbrachten Leistungen innerhalb des zweiten VHDL-Projektes.
 
 ## Beschreibung des Stacks
@@ -41,6 +45,10 @@ Die Adress-Multiplexer-Logik ist ebenfalls asynchron, um RAM-Zugriffe im selben 
 Zustandsübergänge des Stack-Pointers erfolgen synchron zum Takt und werden durch die `push`, `pop` und `clear`-Inputs, sowie die aktuellen Flags (also den aktuellen Stack-Pointer-Wert) gesteuert. Hierbei wird der Stack-Pointer inkrementiert, wenn `push` und gesetzt ist und der Stack noch nicht voll ist, bzw. dekrementiert, wenn `pop` gesetzt ist und der Stack nicht leer ist. Der Stack-Pointer wird auf 0 gesetzt, wenn `clear` gesetzt ist. Die Flags werden asynchron direkt basierend auf dem aktuellen Stack-Pointer aktualisiert, um die Anzahl der Flip-Flops zu minimieren und Inkonsistenzen auszuschließen.
 
 ## Angepasster Test-Preprocessor
+
+_Der source code finden Sie in `/csharp-comment-parser/src`. Pre-compiled executables für Windows/Linux x64 sind verfügbar in der [GitHub Releases](https://github.com/frederik-hoeft/fhdw-vhdl-stack/releases)._
+
+---
 
 Das im ersten VHDL Projekt erstellte C\#/.NET Programm, welches zur vereinfachten Erstellung von Testvektoren gedient hat, wurde nun erweitert und erneut genutzt. Die bestehende Implementierung sorgt dafür, dass Testvektoren zusammen mit Kommentaren in einer CSV Datei festgehalten werden können und die Input- und Output-Daten dann durch das Programm in separate TXT Dateien kopiert werden. Jegliche Kommentare (definiert durch die Position in der Datei) werden bei dem Kopiervorgang ignoriert. Somit kann die Übersichtlichkeit beim Schreiben der Testdaten gewährleistet werden.
 
