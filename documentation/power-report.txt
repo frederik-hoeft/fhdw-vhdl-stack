@@ -1,0 +1,368 @@
+--------------------------------------------------------------------
+|                      Xilinx XPower Analyzer                      |
+--------------------------------------------------------------------
+| Release                | 14.7 - P.20131013 (lin64)               |
+| Command Line           | Generated from Graphical User Interface |
+--------------------------------------------------------------------
+
+--------------------------------
+|      Table of Contents       |
+--------------------------------
+| 1.  Settings                 |
+| 1.1.  Project                |
+| 1.2.  Device                 |
+| 1.3.  Environment            |
+| 1.4.  Default Activity Rates |
+| 2.  Summary                  |
+| 2.1.  On-Chip Power Summary  |
+| 2.2.  Thermal Summary        |
+| 2.3.  Power Supply Summary   |
+| 2.4.  Confidence Level       |
+| 3.  Detailed Reports         |
+| 3.1.  By Hierarchy           |
+| 3.2.  By Clock Domain        |
+| 3.3.  By Resource Type       |
+| 3.3.1.  Core Dynamic         |
+| 3.3.1.1.  Logic              |
+| 3.3.1.2.  Signals            |
+| 3.3.1.3.  BRAM               |
+| 3.3.2.  IO                   |
+--------------------------------
+
+1.  Settings
+1.1.  Project
+-----------------------------------------
+|                Project                |
+-----------------------------------------
+| Design File               | stack.ncd |
+| Settings File             | NA        |
+| Physical Constraints File | stack.pcf |
+| Simulation Activity File  | NA        |
+| Design Nets Matched       | NA        |
+| Simulation Nets Matched   | NA        |
+-----------------------------------------
+
+1.2.  Device
+-----------------------------------------------
+|                   Device                    |
+-----------------------------------------------
+| Family           | Spartan3e                |
+| Part             | xc3s500e                 |
+| Package          | vq100                    |
+| Temp Grade       | Commercial               |
+| Process          | Typical                  |
+| Speed Grade      | -4                       |
+| Characterization | PRODUCTION,v1.2,06-23-09 |
+-----------------------------------------------
+
+1.3.  Environment
+---------------------------
+|       Environment       |
+---------------------------
+| Ambient Temp (C) | 25.0 |
+| Use custom TJA?  | No   |
+| Custom TJA (C/W) | NA   |
+| Airflow (LFM)    | 0    |
+---------------------------
+
+1.4.  Default Activity Rates
+----------------------------------
+|     Default Activity Rates     |
+----------------------------------
+| FF Toggle Rate (%)     | 12.5  |
+| I/O Toggle Rate (%)    | 12.5  |
+| Output Load (pF)       | 5.0   |
+| I/O Enable Rate (%)    | 100.0 |
+| BRAM Write Rate (%)    | 50.0  |
+| BRAM Enable Rate (%)   | 50.0  |
+----------------------------------
+
+2.  Summary
+2.1.  On-Chip Power Summary
+-----------------------------------------------------------------------------
+|                           On-Chip Power Summary                           |
+-----------------------------------------------------------------------------
+|        On-Chip        | Power (mW) |  Used  | Available | Utilization (%) |
+-----------------------------------------------------------------------------
+| Clocks                |       2.82 |      1 |    ---    |       ---       |
+| Logic                 |       0.51 |     33 |      9312 |               0 |
+| Signals               |       0.74 |     60 |    ---    |       ---       |
+| IOs                   |      18.63 |     22 |        66 |              33 |
+| BRAMs                 |       0.52 |      1 |        20 |               5 |
+| Static Power          |      81.99 |        |           |                 |
+| Total                 |     105.20 |        |           |                 |
+-----------------------------------------------------------------------------
+
+2.2.  Thermal Summary
+------------------------------
+|      Thermal Summary       |
+------------------------------
+| Effective TJA (C/W) | 40.0 |
+| Max Ambient (C)     | 80.8 |
+| Junction Temp (C)   | 29.2 |
+------------------------------
+
+2.3.  Power Supply Summary
+----------------------------------------------------------
+|                  Power Supply Summary                  |
+----------------------------------------------------------
+|                      | Total  | Dynamic | Static Power |
+----------------------------------------------------------
+| Supply Power (mW)    | 105.20 | 23.21   | 81.99        |
+----------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------------
+|                                            Power Supply Currents                                            |
+---------------------------------------------------------------------------------------------------------------
+|     Supply Source     | Supply Voltage | Total Current (mA) | Dynamic Current (mA) | Quiescent Current (mA) |
+---------------------------------------------------------------------------------------------------------------
+| Vccint                |          1.200 |              31.03 |                 4.37 |                  26.66 |
+| Vccaux                |          2.500 |              18.37 |                 0.37 |                  18.00 |
+| Vcco25                |          2.500 |               8.81 |                 6.81 |                   2.00 |
+---------------------------------------------------------------------------------------------------------------
+
+2.4.  Confidence Level
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|                                                                                                Confidence Level                                                                                                |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|       User Input Data       | Confidence |                        Details                         |                                                   Action                                                   |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Design implementation state | High       | Design is completely routed                            |                                                                                                            |
+| Clock nodes activity        | High       | User specified more than 95% of clocks                 |                                                                                                            |
+| I/O nodes activity          | Low        | More than 75% of inputs are missing user specification | Provide missing input activity with simulation results or by editing the "By Resource Type -> I/Os" view   |
+| Internal nodes activity     | Medium     | User specified less than 25% of internal nodes         | Provide missing internal nodes activity with simulation results or by editing the "By Resource Type" views |
+| Device models               | High       | Device models are Production                           |                                                                                                            |
+|                             |            |                                                        |                                                                                                            |
+| Overall confidence level    | Low        |                                                        |                                                                                                            |
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3.  Details
+3.1.  By Hierarchy
+---------------------------------------------------------------------------------------------------
+|  By Hierarchy   | Power (mW) | Logic Power (mW) | Signal Power (mW) | # FFs  | # LUTs | # BRAMs |
+---------------------------------------------------------------------------------------------------
+| Hierarchy total |   1.77     |   1.03           |   0.74            |      9 |     32 |      1  |
+|   stack         |   1.77     |   1.03           |   0.74            |      9 |     32 |      1  |
+---------------------------------------------------------------------------------------------------
+
+3.2.  By Clock Domain
+-----------------------------------------------------------------------------------------------------------------------------------------
+|   By Clock Domain : 1    | Power (mW)  | Freq (MHz) |       Buffer        | Buffer Enable (%) | Enable Signal | Fanout | Slice Fanout |
+-----------------------------------------------------------------------------------------------------------------------------------------
+| clk_BUFGP/IBUFG          |             |            |                     |                   |               |        |              |
+|  Logic:                  |             |            |                     |                   |               |        |              |
+|   clk_BUFGP/BUFG.GCLKMUX |       1.87  |     155.64 | BUFGMUX_GCLKMUX     |                NA | NA            |     NA |           NA |
+|   clk_BUFGP/BUFG         |       0.00  |     155.64 | BUFGMUX_GCLK_BUFFER |                NA | NA            |     NA |           NA |
+|  Nets:                   |             |            |                     |                   |               |        |              |
+|   clk_BUFGP              |       0.95  |     155.64 | NA                  |                NA | NA            |     10 |            6 |
+|   clk_BUFGP/IBUFG        |       ~0.00 |     155.64 | NA                  |                NA | NA            |      1 |            1 |
+|                          |             |            |                     |                   |               |        |              |
+| Total                    |       2.82  |            |                     |                   |               |        |              |
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+3.3.  By Resource Type
+3.3.1.  Core Dynamic
+3.3.1.1.  Logic
+-------------------------------------------------------------------------------------------------------------
+|               Logic               | Power (mW) |      Type       | Clock (MHz) | Clock Name | Signal Rate |
+-------------------------------------------------------------------------------------------------------------
+| Mcount_stack_pointer_lut<4>       |       0.02 | F (SLICEL)      |       Async | Async      |        75.5 |
+| addr<1>1                          |       0.02 | G (SLICEL)      |       Async | Async      |        68.4 |
+| addr<3>1                          |       0.01 | G (SLICEL)      |       Async | Async      |        62.1 |
+| Mcount_stack_pointer_lut<7>       |       0.01 | G (SLICEL)      |       Async | Async      |        60.5 |
+| Mcount_stack_pointer_lut<6>       |       0.01 | F (SLICEL)      |       Async | Async      |        60.3 |
+| Mcount_stack_pointer_lut<5>       |       0.01 | G (SLICEL)      |       Async | Async      |        60.0 |
+| addr<5>1                          |       0.01 | F (SLICEL)      |       Async | Async      |        59.9 |
+| Mcount_stack_pointer_lut<3>       |       0.01 | G (SLICEL)      |       Async | Async      |        58.3 |
+| Mcount_stack_pointer_lut<2>       |       0.01 | F (SLICEL)      |       Async | Async      |        56.3 |
+| addr<2>1                          |       0.01 | F (SLICEL)      |       Async | Async      |        55.8 |
+| addr<4>1                          |       0.01 | F (SLICEL)      |       Async | Async      |        53.4 |
+| addr<6>1                          |       0.01 | G (SLICEL)      |       Async | Async      |        50.3 |
+| Mcount_stack_pointer_lut<1>       |       0.01 | G (SLICEL)      |       Async | Async      |        50.0 |
+| Mcount_stack_pointer_lut<0>       |       0.01 | F (SLICEL)      |       Async | Async      |        46.9 |
+| addr<7>1                          |       0.01 | G (SLICEL)      |       Async | Async      |        46.0 |
+| Msub_addr_addsub0000_lut<7>_INV_0 |       0.01 | G (SLICEL)      |       Async | Async      |        41.0 |
+| Msub_addr_addsub0000_lut<6>_INV_0 |       0.01 | F (SLICEL)      |       Async | Async      |        40.9 |
+| Msub_addr_addsub0000_lut<5>_INV_0 |       0.01 | G (SLICEL)      |       Async | Async      |        40.5 |
+| Msub_addr_addsub0000_lut<4>_INV_0 |       0.01 | F (SLICEL)      |       Async | Async      |        39.9 |
+| Msub_addr_addsub0000_lut<3>_INV_0 |       0.01 | G (SLICEL)      |       Async | Async      |        38.7 |
+| Mcount_stack_pointer_cy<7>        |       0.01 | CYMUXG (SLICEL) |       Async | Async      |       115.9 |
+| Mcount_stack_pointer_cy<6>        |       0.01 | CYMUXF (SLICEL) |       Async | Async      |       115.6 |
+| Mcount_stack_pointer_cy<5>        |       0.01 | CYMUXG (SLICEL) |       Async | Async      |       115.0 |
+| addr<0>1                          |       0.01 | F (SLICEL)      |       Async | Async      |        37.7 |
+| Mcount_stack_pointer_cy<3>        |       0.01 | CYMUXG (SLICEL) |       Async | Async      |       111.7 |
+| Msub_addr_addsub0000_lut<2>_INV_0 |       0.01 | F (SLICEL)      |       Async | Async      |        36.6 |
+| Mcount_stack_pointer_cy<2>        |       0.01 | CYMUXF (SLICEL) |       Async | Async      |       107.1 |
+| Mcount_stack_pointer_cy<4>        |       0.01 | CYMUXF (SLICEL) |       Async | Async      |       100.1 |
+| stack_pointer_7                   |       0.01 | FFY (SLICEL)    |       155.6 | clk_BUFGP  |        41.0 |
+| Mcount_stack_pointer_cy<1>        |       0.01 | CYMUXG (SLICEL) |       Async | Async      |        95.9 |
+| stack_pointer_6                   |       0.01 | FFX (SLICEL)    |       155.6 | clk_BUFGP  |        40.9 |
+| stack_pointer_5                   |       0.01 | FFY (SLICEL)    |       155.6 | clk_BUFGP  |        40.5 |
+| stack_pointer_4                   |       0.01 | FFX (SLICEL)    |       155.6 | clk_BUFGP  |        39.9 |
+| Mcount_stack_pointer_xor<7>       |       0.01 | XORG (SLICEL)   |       Async | Async      |        70.7 |
+| Mcount_stack_pointer_xor<6>       |       0.01 | XORF (SLICEL)   |       Async | Async      |        70.5 |
+| Mcount_stack_pointer_xor<5>       |       0.01 | XORG (SLICEL)   |       Async | Async      |        70.1 |
+| Msub_addr_addsub0000_lut<1>_INV_0 |       0.01 | G (SLICEL)      |       Async | Async      |        29.9 |
+| Mcount_stack_pointer_xor<4>       |       0.01 | XORF (SLICEL)   |       Async | Async      |        69.3 |
+| stack_pointer_3                   |       0.01 | FFY (SLICEL)    |       155.6 | clk_BUFGP  |        38.7 |
+| Mcount_stack_pointer_xor<3>       |       0.01 | XORG (SLICEL)   |       Async | Async      |        67.7 |
+| stack_pointer_2                   |       0.01 | FFX (SLICEL)    |       155.6 | clk_BUFGP  |        36.6 |
+| Mcount_stack_pointer_xor<2>       |       0.01 | XORF (SLICEL)   |       Async | Async      |        64.3 |
+| Mcount_stack_pointer_cy<0>        |       0.01 | CYMUXF (SLICEL) |       Async | Async      |        83.0 |
+| Mcount_stack_pointer_xor<8>       |       0.01 | XORF (SLICEL)   |       Async | Async      |        63.0 |
+| Mcount_stack_pointer_xor<1>       |       0.01 | XORG (SLICEL)   |       Async | Async      |        57.9 |
+| addr<8>1                          |       0.01 | G (SLICEL)      |       Async | Async      |        23.3 |
+| stack_pointer_1                   |       0.01 | FFY (SLICEL)    |       155.6 | clk_BUFGP  |        29.9 |
+| stack_pointer_not00011            |       0.00 | F (SLICEL)      |       Async | Async      |        22.6 |
+| Msub_addr_addsub0000_cy<0>        |       0.00 | CYMUXF (SLICEL) |       Async | Async      |        66.3 |
+| Msub_addr_addsub0000_xor<2>       |       0.00 | XORF (SLICEL)   |       Async | Async      |        50.2 |
+| Msub_addr_addsub0000_xor<3>       |       0.00 | XORG (SLICEL)   |       Async | Async      |        48.3 |
+| Mcount_stack_pointer_xor<0>       |       0.00 | XORF (SLICEL)   |       Async | Async      |        47.4 |
+| stack_pointer_0                   |       0.00 | FFX (SLICEL)    |       155.6 | clk_BUFGP  |        26.5 |
+| Msub_addr_addsub0000_xor<1>       |       0.00 | XORG (SLICEL)   |       Async | Async      |        46.2 |
+| Msub_addr_addsub0000_xor<4>       |       0.00 | XORF (SLICEL)   |       Async | Async      |        45.8 |
+| Msub_addr_addsub0000_lut<8>_INV_0 |       0.00 | F (SLICEL)      |       Async | Async      |        19.0 |
+| Msub_addr_addsub0000_xor<5>       |       0.00 | XORG (SLICEL)   |       Async | Async      |        43.9 |
+| Msub_addr_addsub0000_xor<6>       |       0.00 | XORF (SLICEL)   |       Async | Async      |        42.7 |
+| Msub_addr_addsub0000_xor<7>       |       0.00 | XORG (SLICEL)   |       Async | Async      |        42.0 |
+| Mcount_stack_pointer_lut<8>       |       0.00 | F (SLICEL)      |       Async | Async      |        17.9 |
+| push_en1                          |       0.00 | G (SLICEL)      |       Async | Async      |        17.9 |
+| push_en_inv2                      |       0.00 | G (SLICEL)      |       Async | Async      |        17.9 |
+| Msub_addr_addsub0000_cy<1>        |       0.00 | CYMUXG (SLICEL) |       Async | Async      |        53.1 |
+| empty_flag_cmp_eq00008            |       0.00 | G (SLICEL)      |       Async | Async      |        17.4 |
+| stack_pointer_8                   |       0.00 | FFX (SLICEL)    |       155.6 | clk_BUFGP  |        19.0 |
+| Msub_addr_addsub0000_cy<2>        |       0.00 | CYMUXF (SLICEL) |       Async | Async      |        39.6 |
+| empty_flag_cmp_eq000032           |       0.00 | F (SLICEL)      |       Async | Async      |        12.6 |
+| Msub_addr_addsub0000_xor<0>       |       0.00 | XORF (SLICEL)   |       Async | Async      |        26.5 |
+| Msub_addr_addsub0000_xor<8>       |       0.00 | XORF (SLICEL)   |       Async | Async      |        19.8 |
+| Msub_addr_addsub0000_cy<3>        |       0.00 | CYMUXG (SLICEL) |       Async | Async      |        24.2 |
+| Msub_addr_addsub0000_cy<4>        |       0.00 | CYMUXF (SLICEL) |       Async | Async      |        13.8 |
+| Msub_addr_addsub0000_cy<5>        |       0.00 | CYMUXG (SLICEL) |       Async | Async      |         7.5 |
+| Msub_addr_addsub0000_cy<6>        |       0.00 | CYMUXF (SLICEL) |       Async | Async      |         4.0 |
+| Msub_addr_addsub0000_cy<7>        |       0.00 | CYMUXG (SLICEL) |       Async | Async      |         2.1 |
+| empty_flag_cmp_eq000034           |       0.00 | F (SLICEL)      |       Async | Async      |         0.5 |
+| ProtoComp0.C2VDD                  |       0.00 | C2VDD (SLICEL)  |       Async | Async      |         0.0 |
+| ProtoComp0.GNDF                   |       0.00 | GNDF (SLICEL)   |       Async | Async      |         0.0 |
+| ProtoComp1.C1VDD                  |       0.00 | C1VDD (SLICEL)  |       Async | Async      |         0.0 |
+| ProtoComp1.C1VDD.1                |       0.00 | C1VDD (SLICEL)  |       Async | Async      |         0.0 |
+| ProtoComp1.C1VDD.2                |       0.00 | C1VDD (SLICEL)  |       Async | Async      |         0.0 |
+| ProtoComp1.C2VDD                  |       0.00 | C2VDD (SLICEL)  |       Async | Async      |         0.0 |
+| ProtoComp1.C2VDD.1                |       0.00 | C2VDD (SLICEL)  |       Async | Async      |         0.0 |
+| ProtoComp1.C2VDD.2                |       0.00 | C2VDD (SLICEL)  |       Async | Async      |         0.0 |
+| ProtoComp9.RAMB16                 |       0.00 | RAMB16          |       Async | Async      |        19.5 |
+|                                   |            |                 |             |            |             |
+| Total                             |       0.51 |                 |             |            |             |
+-------------------------------------------------------------------------------------------------------------
+
+3.3.1.2.  Signals
+-----------------------------------------------------------------------------------------------------------------------------------
+|          Signals           | Power (mW) | Signal Rate | % High | Fanout | Slice Fanout |   Clock   |         Logic Type         |
+-----------------------------------------------------------------------------------------------------------------------------------
+| addr<3>                    |       0.06 |       62.09 |   50.4 |      1 |            1 | Async     | NA                         |
+| stack_pointer<3>           |       0.03 |       38.74 |   50.5 |      5 |            4 | clk_BUFGP | NA                         |
+| addr<1>                    |       0.03 |       68.40 |   50.1 |      1 |            1 | Async     | NA                         |
+| push_en                    |       0.03 |       17.94 |   24.8 |      9 |            9 | Async     | NA                         |
+| stack_pointer<4>           |       0.03 |       39.91 |   50.5 |      5 |            4 | clk_BUFGP | NA                         |
+| stack_pointer<8>           |       0.03 |       19.00 |   50.5 |     16 |           16 | clk_BUFGP | NA                         |
+| addr<5>                    |       0.03 |       59.87 |   50.5 |      1 |            1 | Async     | NA                         |
+| addr<2>                    |       0.03 |       55.77 |   50.3 |      1 |            1 | Async     | NA                         |
+| stack_pointer<5>           |       0.03 |       40.53 |   50.5 |      5 |            4 | clk_BUFGP | NA                         |
+| push_IBUF                  |       0.03 |       19.46 |   50.0 |     13 |           13 | Async     | NA                         |
+| addr<4>                    |       0.03 |       53.37 |   50.5 |      1 |            1 | Async     | NA                         |
+| addr<6>                    |       0.02 |       50.34 |   50.5 |      1 |            1 | Async     | NA                         |
+| dout_0_OBUF                |       0.02 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| addr<7>                    |       0.02 |       46.05 |   50.5 |      1 |            1 | Async     | NA                         |
+| stack_pointer<6>           |       0.02 |       40.87 |   50.5 |      5 |            4 | clk_BUFGP | NA                         |
+| stack_pointer_not0001      |       0.02 |       22.63 |   62.3 |      9 |            5 | clk_BUFGP | FFX (SLICEL), FFY (SLICEL) |
+| addr<0>                    |       0.02 |       37.67 |   49.8 |      1 |            1 | Async     | NA                         |
+| stack_pointer<2>           |       0.02 |       36.60 |   50.5 |      5 |            4 | clk_BUFGP | NA                         |
+| dout_2_OBUF                |       0.02 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| din_0_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| stack_pointer<7>           |       0.01 |       41.05 |   50.5 |      5 |            4 | clk_BUFGP | NA                         |
+| dout_5_OBUF                |       0.01 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| dout_6_OBUF                |       0.01 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| din_5_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| dout_1_OBUF                |       0.01 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| dout_7_OBUF                |       0.01 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| addr<8>                    |       0.01 |       23.34 |   38.0 |      1 |            1 | Async     | NA                         |
+| din_3_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| din_2_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| din_4_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| dout_4_OBUF                |       0.01 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| dout_3_OBUF                |       0.01 |       25.00 |   50.0 |      1 |            1 | clk_BUFGP | NA                         |
+| din_6_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| stack_pointer<1>           |       0.01 |       29.85 |   50.6 |      5 |            4 | clk_BUFGP | NA                         |
+| din_1_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| din_7_IBUF                 |       0.01 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| stack_pointer<0>           |       0.01 |       26.52 |   50.4 |      5 |            4 | clk_BUFGP | NA                         |
+| addr_addsub0000<0>         |       0.01 |       26.52 |   49.6 |      1 |            1 | Async     | NA                         |
+| addr_addsub0000<2>         |       0.01 |       50.16 |   50.3 |      1 |            1 | Async     | NA                         |
+| pop_IBUF                   |       0.00 |       19.46 |   50.0 |      1 |            1 | Async     | NA                         |
+| addr_addsub0000<3>         |       0.00 |       48.27 |   50.4 |      1 |            1 | Async     | NA                         |
+| addr_addsub0000<1>         |       0.00 |       46.20 |   50.0 |      1 |            1 | Async     | NA                         |
+| addr_addsub0000<4>         |       0.00 |       45.76 |   50.4 |      1 |            1 | Async     | NA                         |
+| push_en_inv                |       0.00 |       17.94 |   75.2 |      2 |            1 | Async     | NA                         |
+| addr_addsub0000<5>         |       0.00 |       43.89 |   50.5 |      1 |            1 | Async     | NA                         |
+| addr_addsub0000<8>         |       0.00 |       19.83 |   50.5 |      1 |            1 | Async     | NA                         |
+| clear_IBUF                 |       0.00 |        1.56 |    1.0 |      9 |            5 | Async     | NA                         |
+| empty_OBUF                 |       0.00 |        0.50 |    0.2 |     11 |           11 | Async     | NA                         |
+| Mcount_stack_pointer_cy<1> |       0.00 |       95.92 |   56.7 |      2 |            1 | Async     | NA                         |
+| Mcount_stack_pointer_cy<3> |       0.00 |      111.67 |   52.1 |      2 |            1 | Async     | NA                         |
+| Mcount_stack_pointer_cy<5> |       0.00 |      115.04 |   50.9 |      2 |            1 | Async     | NA                         |
+| Mcount_stack_pointer_cy<7> |       0.00 |      115.91 |   50.6 |      1 |            1 | Async     | NA                         |
+| Msub_addr_addsub0000_cy<1> |       0.00 |       53.06 |   74.5 |      2 |            1 | Async     | NA                         |
+| Msub_addr_addsub0000_cy<3> |       0.00 |       24.16 |   93.5 |      2 |            1 | Async     | NA                         |
+| Msub_addr_addsub0000_cy<5> |       0.00 |        7.52 |   98.3 |      2 |            1 | Async     | NA                         |
+| Msub_addr_addsub0000_cy<7> |       0.00 |        2.10 |   99.6 |      1 |            1 | Async     | NA                         |
+| addr_addsub0000<6>         |       0.00 |       42.71 |   50.5 |      1 |            1 | Async     | NA                         |
+| addr_addsub0000<7>         |       0.00 |       42.04 |   50.5 |      1 |            1 | Async     | NA                         |
+| empty_flag_cmp_eq000032    |       0.00 |       12.57 |    6.0 |      1 |            1 | Async     | NA                         |
+| empty_flag_cmp_eq00008/O   |       0.00 |       17.38 |   12.1 |      1 |            1 | Async     | NA                         |
+|                            |            |             |        |        |              |           |                            |
+| Total                      |       0.74 |             |        |        |              |           |                            |
+-----------------------------------------------------------------------------------------------------------------------------------
+
+3.3.1.3.  BRAM
+------------------------------------------------------------------------------------------
+|      Logic      | Power (mW) |      Type      | Clock (MHz) | Clock Name | Signal Rate |
+------------------------------------------------------------------------------------------
+| RAMB4_S8_inst.A |       0.52 | RAMB16_RAMB16A |       Async | Async      |        25.0 |
+|                 |            |                |             |            |             |
+| Total           |       0.52 |                |             |            |             |
+------------------------------------------------------------------------------------------
+
+3.3.2.  IO
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+|         IO         | Power (mW) |   I/O Standard   | Signal Rate | % High | Clock (MHz) | Clock Name | Input Pins | Output Pins | Bidir Pins | Output Enable (%) | Output Load (pF) | Data Rate | IO LOGIC SERDES | IO DELAY | IBUF LOW PWR | Vccint (mW) | Vccaux (mW) | Vcco On-Chip Termal (mW)  | Vcco Supply Current (mA) |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| dout<0>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| dout<1>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| dout<2>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| dout<3>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| dout<4>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| dout<5>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| dout<6>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| dout<7>            |       2.07 | LVCMOS25_12_SLOW |       25.00 |   50.0 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.11 |                      1.94 |                     0.78 |
+| full               |       1.57 | LVCMOS25_12_SLOW |       19.00 |   50.5 |      155.64 | clk_BUFGP  |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.02 |        0.08 |                      1.47 |                     0.59 |
+| clk                |       0.28 | LVCMOS25         |      311.28 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.28 |        0.00 |                      0.00 |                     0.00 |
+| empty              |       0.04 | LVCMOS25_12_SLOW |        0.50 |    0.2 |       Async | Async      |          0 |           1 |          0 |                NA |                5 | SDR       | No              | Off      | No           |        0.00 |        0.00 |                      0.04 |                     0.02 |
+| din<0>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| din<1>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| din<2>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| din<3>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| din<4>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| din<5>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| din<6>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| din<7>             |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| pop                |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| push               |       0.02 | LVCMOS25         |       19.46 |   50.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.02 |        0.00 |                      0.00 |                     0.00 |
+| clear              |       0.00 | LVCMOS25         |        1.56 |    1.0 |       Async | Async      |          1 |           0 |          0 |                NA |                0 | SDR       | No              | Off      | No           |        0.00 |        0.00 |                      0.00 |                     0.00 |
+|                    |            |                  |             |        |             |            |            |             |            |                   |                  |           |                 |          |              |             |             |                           |                          |
+| Internal VREFs (0) |       0.00 |                  |             |        |             |            |            |             |            |                   |                  |           |                 |          |              |             |             |                           |                          |
+|                    |            |                  |             |        |             |            |            |             |            |                   |                  |           |                 |          |              |             |             |                           |                          |
+| Total              |      18.63 |                  |             |        |             |            |            |             |            |                   |                  |           |                 |          |              |             |             |                           |                          |
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Analysis completed: Tue Aug 29 14:20:31 2023
+----------------------------------------------------------------

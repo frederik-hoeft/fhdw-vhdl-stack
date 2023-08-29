@@ -143,6 +143,13 @@ ipshared
 stack_pad.csv
 stack_pad.txt
 stack_tb_stx_beh.prj
+*.tcl
+*.pwr
+*.nlf
+*.v
+*.sdf
+*.pcs
+*.xdl
 
 # custom dirs
 xlnx_auto_0_xdb/
@@ -151,6 +158,7 @@ _ngo/
 xst/
 isim/
 planAhead_run_*/
+netgen/
 
 # vim
 *.swp
