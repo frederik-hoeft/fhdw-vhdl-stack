@@ -1,4 +1,8 @@
-# Datenblatt
+# VHDL Stack - Datenblatt 
+
+_Gruppe: Ben Bekir Ertugrul, Frederik Höft, Manuele Waldheim und Henri Betz_
+
+---
 
 Dieses Dokument liefert eine kurze technische Übersicht des VHDL Stacks.
 
@@ -14,7 +18,7 @@ Die zur Verfügung stehenden Ports sind in der folgenden Tabelle abgebildet. All
 
 | Typ | Name | Beschreibung | Wortbreite |
 |-|-|-|-|-|
-| In | clk | Clock ($f <$ 155 MHz) | 1 |
+| In | clk | Clock ($f <$ 155.715 MHz) | 1 |
 | In | push | Push word from `din` onto stack (**requires:** $\neg$ full) | 1 |
 | In | pop | Pop word from stack to `dout` (**requires:** $\neg$ empty) | 1 |
 | In | clear | Clear stack, set stack pointer to 0, sets `full = 0`, sets `empty = 1` | 1 |

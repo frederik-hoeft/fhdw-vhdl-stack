@@ -46,7 +46,7 @@ Zustandsübergänge des Stack-Pointers erfolgen synchron zum Takt und werden dur
 
 ## Angepasster Test-Preprocessor
 
-_Der source code finden Sie in `/csharp-comment-parser/src`. Pre-compiled executables für Windows/Linux x64 sind verfügbar in der [GitHub Releases](https://github.com/frederik-hoeft/fhdw-vhdl-stack/releases)._
+_Den source code finden Sie in `/csharp-comment-parser/src`. Pre-compiled executables für Windows/Linux x64 sind verfügbar in der [GitHub Releases](https://github.com/frederik-hoeft/fhdw-vhdl-stack/releases)._
 
 ---
 
@@ -71,14 +71,17 @@ Damit das C\#-Programm die Testdaten erfolgreich verarbeiten kann, wird der Aufb
 Der erwartete Inhalt der Input- und Output-Abschnitte kann sich wie oben erwähnt von Spalte zu Spalte ändern. Entweder werden Werte einer Spalte passend zu der Definition der Spalte, oder, falls keine Definition vorhanden, ein Bit erwartet.
 Unabhängig von der Spaltendefinition kann IMMER ein "X" in einer Zelle stehen, welches als Don't Care interpretiert wird. 
 
-Der folgende Bildschirmausschnitt veranschaulicht die oben beschriebene Struktur anhand eines Beispiels mit 12 Input-Feldern und 10 Output-Feldern. Die letzten 8 Input-Felder werden in Spalte F zusammengefasst und sind im Dezimalsystem notiert. Das gleiche gilt für die letzten 8 Output-Felder in Spalte J. **(1)**
+Der folgende Bildschirmausschnitt veranschaulicht die oben beschriebene Struktur anhand eines Beispiels mit 12 Input-Feldern und 10 Output-Feldern. Die letzten 8 Input-Felder werden in Spalte F zusammengefasst und sind im Dezimalsystem notiert. Das gleiche gilt für die letzten 8 Output-Felder in der letzten Spalte. 
+
+#### Beispiel 1
+
 ![](./assets/images/csv-structure.png)
 
 ### TXT Struktur
 
 Pro CSV Datei werden zwei TXT Dateien erstellt. Eine Datei beinhaltet die Input-Felder und eine Datei beinhaltet die Output-Felder. Daten in verschiedenen Spalten werden durch Leerzeichen separiert. Die Daten werden unter Beeinhaltung der angegebenen Reihenfolge kopiert, jedoch wird der letzte Input-Datensatz, sowie der erste Output-Datensatz zwei Mal eingefügt, da die Zustandsänderung um einen Takt nach hinten verschoben ist.
 
-Die generierten Dateien passend zu Beispiel **(1)** sehen wie folgt aus:
+Die generierten Dateien passend zu [Beispiel 1](#beispiel-1) sehen wie folgt aus:
 
 *tb-inputs.txt*
 ```
@@ -142,5 +145,6 @@ Die generierten Dateien passend zu Beispiel **(1)** sehen wie folgt aus:
 
 Die für das letzte Projekt genutzte Testbench wurde nun so erweitert, dass sie auch die neuen Input- und Output-Pins auswerten kann. Außerdem wurde die Generation einer ausführlichen Log-Datei im CSV-Format dem Testvorgang hinzugefügt, welche den Status des Tests, zusammen mit den getesteten Daten aufführt. Dies bietet einen deutlich detaillierteren Output im Gegensatz zu der Basisimplementierung und sorgt vor allem dafür, dass Fehler in der Implementation schneller beseitigt werden konnten. Zudem wird die CSV Tabelle so formatiert, dass der Input und Output/Expected-Wert der Testvektoren direkt nebeneinander steht (der delay wird also automatisch ausgeglichen), was die Übersichtlichkeit der Testergebnisse deutlich erhöht.
 
-Die generierte Log-Datei passend zu Beispiel **(1)** sieht wie folgt aus:
+Die generierte Log-Datei passend zu [Beispiel 1](#beispiel-1) sieht wie folgt aus:
+
 ![](./assets/images/example-log-file.png)
