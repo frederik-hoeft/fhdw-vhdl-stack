@@ -10,7 +10,7 @@ entity stack is port(
     -- the peek port is a legacy pin and was at some point optimized out of the design.
     -- now it only exists for backwards compatibility purposes with the test bench. 
     -- FYI: peek is now the default operation when push = clear = 0 (also: pop implies peek).
-    -- as of now the peek pin is not connected to anything, but we allow for the possibility of
+    -- currently the peek pin is not connected to anything, but we allow for the possibility of
     -- using it for something else in the future :)
     -- (yes there are warning because of it, but we don't want to rewrite the whole test bench again)
     -- (also if we were to change the implementation of the stack again and need to re-introduce
