@@ -2,8 +2,6 @@
 
 _Gruppe: Ben Bekir Ertugrul, Frederik Höft, Manuele Waldheim und Henri Betz_
 
----
-
 Dieses Dokument liefert eine kurze technische Übersicht des VHDL Stacks.
 
 ## Eigenschaften
